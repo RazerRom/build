@@ -316,10 +316,46 @@ for changeps in args.change_number:
     committer_date   = current_revision['commit']['committer']['date'].replace(date_fluff, '')
     subject          = current_revision['commit']['subject']
 
+    # Enumerate through JSON response
+    for (i, data) in enumerate(data_array):
+        date_fluff       = '.000000000'
+        project_name     = data['project']
+        change_number    = data['_number']
+        status           = data['status']
+        current_revision = data['revisions'][data['current_revision']]
+        patch_number     = current_revision['_number']
+        # Backwards compatibility
+        if 'http' in current_revision['fetch']:
+            fetch_url        = current_revision['fetch']['http']['url']
+            fetch_ref        = current_revision['fetch']['http']['ref']
+        else:
+            fetch_url        = current_revision['fetch']['anonymous http']['url']
+            fetch_ref        = current_revision['fetch']['anonymous http']['ref']
+        author_name      = current_revision['commit']['author']['name']
+        author_email     = current_revision['commit']['author']['email']
+        author_date      = current_revision['commit']['author']['date'].replace(date_fluff, '')
+        committer_name   = current_revision['commit']['committer']['name']
+        committer_email  = current_revision['commit']['committer']['email']
+        committer_date   = current_revision['commit']['committer']['date'].replace(date_fluff, '')
+        subject          = current_revision['commit']['subject']
+
     # Check if commit has already been merged and exit if it has, unless -f is specified
     if status == "MERGED":
         if args.force:
             print("!! Force-picking a merged commit !!\n")
+
+        else:
+            print("Commit already merged. Skipping the cherry pick.\nUse -f to force this pick.")
+            sys.exit(1)
+
+        # Convert the project name to a project path
+        #   - check that the project path exists
+        if project_name in project_name_to_path:
+            project_path = project_name_to_path[project_name];
+        elif args.ignore_missing:
+            print('WARNING: Skipping %d since there is no project directory for: %s\n' % (change_number, project_name))
+            continue;
+
         else:
             print("Commit already merged. Skipping the cherry pick.\nUse -f to force this pick.")
             continue;
