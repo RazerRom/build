@@ -565,6 +565,10 @@ function breakfast()
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
+            # This is probably just the BLISS model name
+            if [ -z "$variant" ]; then
+                variant="userdebug"
+            fi
             lunch bliss_$target-$variant
         fi
     fi
