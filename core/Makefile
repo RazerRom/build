@@ -1659,6 +1659,7 @@ BLISS_TARGET_PACKAGE := $(PRODUCT_OUT)/$(BLISS_VERSION).zip
 .PHONY: otapackage bacon
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 bacon: otapackage
+<<<<<<< HEAD
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(BLISS_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(BLISS_TARGET_PACKAGE) > $(BLISS_TARGET_PACKAGE).md5sum
 	@echo -e ${CL_CYN}""${CL_CYN}
@@ -1685,6 +1686,12 @@ ifeq ($(BLISS_CHANGELOG),true)
 # Generate changelog
 	$(hide) ./vendor/bliss/tools/changelog
 	$(hide) mv $(PRODUCT_OUT)/Changelog.txt $(PRODUCT_OUT)/$(BLISS_VERSION)-$(TARGET_PRODUCT).txt
+
+ifeq ($(USE_PREBUILT_CHROMIUM),1)
+ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
+	@echo "Running Chromium prebuilt setup script..."
+	$(hide) . $(TOPDIR)vendor/bliss/utils/chromium_prebuilt.sh $(TOP)
+endif
 endif
 
 endif    # recovery_fstab is defined
