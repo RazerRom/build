@@ -594,10 +594,10 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Unmount("/data")
 
   script.Print("******************************************");
-  script.Print("*   Nameless Rom");
-  namelessv = GetBuildProp("ro.nameless.version", OPTIONS.info_dict)
+  script.Print("*   BlissPop Rom");
+  namelessv = GetBuildProp("ro.cm.version", OPTIONS.info_dict)
   builddate = GetBuildProp("ro.build.date", OPTIONS.info_dict)
-  releasetype = GetBuildProp("ro.nameless.releasetype", OPTIONS.info_dict)
+  releasetype = GetBuildProp("ro.cm.releasetype", OPTIONS.info_dict)
   script.Print("*   Release: %s"%(releasetype));
   script.Print("*   Build date: %s"%(builddate));
 
@@ -698,7 +698,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.ShowProgress(0.05, 5)
   script.WriteRawImage("/boot", "boot.img")
 
-  script.Print("{+} Enjoy Nameless Rom!")
+  script.Print("{+} Enjoy BlissPop Rom!")
   script.ShowProgress(0.2, 10)
   device_specific.FullOTA_InstallEnd()
 

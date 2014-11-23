@@ -1626,7 +1626,7 @@ ifneq ($(TARGET_UNIFIED_DEVICE),)
 endif
 
 ifeq ($(CUSTOM_EXTRA_SCRIPT),)
-    CUSTOM_EXTRA_SCRIPT := vendor/cm/afterflash/extra_script.recovery
+CUSTOM_EXTRA_SCRIPT := vendor/cm/afterflash/extra_script.recovery
 endif
 
 $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
