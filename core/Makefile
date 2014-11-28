@@ -1653,17 +1653,17 @@ bacon: otapackage
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(BLISS_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(BLISS_TARGET_PACKAGE) > $(BLISS_TARGET_PACKAGE).md5sum
 	@echo -e ${CL_CYN}""${CL_CYN}
-	@echo -e ${CL_CYN}"      ___           ___                   ___           ___     "${CL_CYN}
-	@echo -e ${CL_CYN}"     /\  \         /\__\      ___        /\  \         /\  \    "${CL_CYN}
-	@echo -e ${CL_CYN}"    /::\  \       /:/  /     /\  \      /::\  \       /::\  \   "${CL_CYN}
-	@echo -e ${CL_CYN}"   /:/\:\  \     /:/  /      \:\  \    /:/\ \  \     /:/\ \  \  "${CL_CYN}
-	@echo -e ${CL_CYN}"  /::\~\:\__\   /:/  /       /::\__\  _\:\~\ \  \   _\:\~\ \  \ "${CL_CYN}
-	@echo -e ${CL_CYN}" /:/\:\ \:\__\ /:/__/     __/:/\/__/ /\ \:\ \ \__\ /\ \:\ \ \__\"${CL_CYN}
-	@echo -e ${CL_CYN}" \:\~\:\/:/  / \:\  \    /\/:/  /    \:\ \:\ \/__/ \:\ \:\ \/__/"${CL_CYN}
-	@echo -e ${CL_CYN}"  \:\ \::/  /   \:\  \   \::/__/      \:\ \:\__\    \:\ \:\__\  "${CL_CYN}
-	@echo -e ${CL_CYN}"   \:\/:/  /     \:\  \   \:\__\       \:\/:/  /     \:\/:/  /  "${CL_CYN}
-	@echo -e ${CL_CYN}"    \::/__/       \:\__\   \/__/        \::/  /       \::/  /   "${CL_CYN}
-	@echo -e ${CL_CYN}"     ~~            \/__/                 \/__/         \/__/    "${CL_CYN}
+	@echo -e ${CL_CYN}"      ___           ___                   ___           ___      "${CL_CYN}
+	@echo -e ${CL_CYN}"     /\  \         /\__\      ___        /\  \         /\  \     "${CL_CYN}
+	@echo -e ${CL_CYN}"    /::\  \       /:/  /     /\  \      /::\  \       /::\  \    "${CL_CYN}
+	@echo -e ${CL_CYN}"   /:/\:\  \     /:/  /      \:\  \    /:/\ \  \     /:/\ \  \   "${CL_CYN}
+	@echo -e ${CL_CYN}"  /::\~\:\__\   /:/  /       /::\__\  _\:\~\ \  \   _\:\~\ \  \  "${CL_CYN}
+	@echo -e ${CL_CYN}" /:/\:\ \:\__\ /:/__/     __/:/\/__/ /\ \:\ \ \__\ /\ \:\ \ \__\ "${CL_CYN}
+	@echo -e ${CL_CYN}" \:\~\:\/:/  / \:\  \    /\/:/  /    \:\ \:\ \/__/ \:\ \:\ \/__/ "${CL_CYN}
+	@echo -e ${CL_CYN}"  \:\ \::/  /   \:\  \   \::/__/      \:\ \:\__\    \:\ \:\__\   "${CL_CYN}
+	@echo -e ${CL_CYN}"   \:\/:/  /     \:\  \   \:\__\       \:\/:/  /     \:\/:/  /   "${CL_CYN}
+	@echo -e ${CL_CYN}"    \::/__/       \:\__\   \/__/        \::/  /       \::/  /    "${CL_CYN}
+	@echo -e ${CL_CYN}"     ~~            \/__/                 \/__/         \/__/     "${CL_CYN}
 	@echo -e ${CL_CYN}""${CL_CYN}
 	@echo -e ${CL_CYN}"===========-Bliss Package Complete-==========="${CL_RST}
 	@echo -e ${CL_CYN}"Zip: "${CL_MAG} $(BLISS_TARGET_PACKAGE)${CL_RST}
