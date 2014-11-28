@@ -603,9 +603,9 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print("******************************************");
   script.Print("*   Created By TeamBliss");
   script.Print("******************************************");    
-  namelessv = GetBuildProp("ro.cm.version", OPTIONS.info_dict)
+ # namelessv = GetBuildProp("ro.cm.version", OPTIONS.info_dict)
   builddate = GetBuildProp("ro.build.date", OPTIONS.info_dict)
-  releasetype = GetBuildProp("ro.cm.releasetype", OPTIONS.info_dict)
+ # releasetype = GetBuildProp("ro.cm.releasetype", OPTIONS.info_dict)
   script.Print("*   Release: %s"%(releasetype));
   script.Print("*   Build date: %s"%(builddate));
 
