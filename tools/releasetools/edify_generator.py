@@ -159,7 +159,7 @@ class EdifyGenerator(object):
     if command == "restore":
         self.script.append('delete("/system/bin/backuptool.sh");')
         self.script.append('delete("/system/bin/backuptool.functions");')
-        
+
   def ValidateSignatures(self, command):
     if command == "cleanup":
         self.script.append('delete("/system/bin/otasigcheck.sh");')
@@ -167,8 +167,8 @@ class EdifyGenerator(object):
         self.script.append('package_extract_file("system/bin/otasigcheck.sh", "/tmp/otasigcheck.sh");')
         self.script.append('package_extract_file("META-INF/org/cyanogenmod/releasekey", "/tmp/releasekey");')
         self.script.append('set_metadata("/tmp/otasigcheck.sh", "uid", 0, "gid", 0, "mode", 0755);')
-        self.script.append('run_program("/tmp/otasigcheck.sh") == "0" || abort("Can\'t install this package on top of incompatible data. Please try another package or run a factory reset");')      self.script.append('run_program("/tmp/otasigcheck.sh") == "0" || abort("Can\'t install this package on top of incompatible data. Please try another package or run a factory reset");')
-
+        self.script.append('run_program("/tmp/otasigcheck.sh") == "0" || abort("Can\'t install this package on top of incompatible data. Please try another package or run a factory reset");')        
+        
   def FlashSuperSU(self):
     self.script.append('package_extract_dir("supersu", "/tmp/supersu");')
     self.script.append('run_program("/sbin/busybox", "unzip", "/tmp/supersu/supersu.zip", "META-INF/com/google/android/*", "-d", "/tmp/supersu");')
