@@ -58,8 +58,5 @@ echo "ro.build.characteristics=$TARGET_AAPT_CHARACTERISTICS"
 
 #Bliss Properties
 echo "ro.bliss.device=$BLISS_DEVICE"
-#CM VERSIONS
-ech "ro.cm.version=$12"
-echo "ro.cm.releasetype=$Bliss"
 
 echo "# end build properties"
