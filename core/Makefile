@@ -1681,6 +1681,12 @@ bacon: otapackage
 	@echo -e ${CL_CYN}"==============================================="${CL_RST}
 	@echo -e ""
 
+ifeq ($(BLISS_CHANGELOG),true)
+# Generate changelog
+	$(hide) ./vendor/bliss/tools/changelog
+	$(hide) mv $(PRODUCT_OUT)/Changelog.txt $(PRODUCT_OUT)/$(BLISS_VERSION)-$(TARGET_PRODUCT).txt
+endif
+
 endif    # recovery_fstab is defined
 endif    # TARGET_NO_KERNEL != true
 endif    # TARGET_DEVICE != generic*
