@@ -622,7 +622,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   recovery_mount_options = OPTIONS.info_dict.get("recovery_mount_options")
 
   if block_based:
-    script.Print("{!} Installation is block based")
+    script.Print("{*} Installation is block based")
 
   system_items = ItemSet("system", "META/filesystem_config.txt")
   script.ShowProgress(system_progress, 0)
