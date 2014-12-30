@@ -2368,7 +2368,7 @@ function chromium_prebuilt() {
     bldblu=${txtbld}$(tput setaf 4)
     bldgrn=${txtbld}$(tput setaf 2)
 
-    if [ -r $hash ] && [ $(git --git-dir=$T/external/chromium_org/.git --work-tree=$T/external/chromium_org rev-parse --verify HEAD) == $(cat $hash) ] && [ -f $libsCheck ] && [ -d $appCheck ]; then
+    if [ -r $hash ] && [ $(git --git-dir=$T/external/chromium_org/.git --work-tree=$T/external/chromium_org rev-parse --verify HEAD) == $(cat $hash) ]; then
         export PRODUCT_PREBUILT_WEBVIEWCHROMIUM=yes
         echo -e ${bldblu}"Prebuilt Chromium is up-to-date: ${bldgrn}Will be used for build"${txtrst}
         echo -e ""
