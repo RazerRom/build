@@ -136,6 +136,10 @@ endif
 endif
 endif
 
+ifeq ($(BLISS_PIPE),true)
+include $(BUILD_SYSTEM)/pipe.mk
+endif
+
 # The following LOCAL_ variables will be modified in this file.
 # Because the same LOCAL_ variables may be used to define modules for both 1st arch and 2nd arch,
 # we can't modify them in place.
