@@ -991,7 +991,6 @@ ifdef BOARD_CUSTOM_BOOTIMG_MK
 include $(BOARD_CUSTOM_BOOTIMG_MK)
 endif
 
-
 # -----------------------------------------------------------------
 # system image
 #
@@ -1007,8 +1006,9 @@ INTERNAL_SYSTEMIMAGE_FILES := $(filter $(TARGET_OUT)/%, \
     $(ALL_DEFAULT_INSTALLED_MODULES) \
     $(PDK_FUSION_SYSIMG_FILES) \
     $(RECOVERY_RESOURCE_ZIP))
-
+    
 systemimage-squisher: $(INTERNAL_SYSTEMIMAGE_FILES)
+	$(hide) ./vendor/bliss/tools/changelog
 	@echo -e "Optimizing PNGs to Shrink ROM Size!"
 	$(hide) APKCERTS=$(APKCERTS_FILE) ./vendor/bliss/tools/squisher
 
@@ -1617,6 +1617,7 @@ name := $(TARGET_PRODUCT)
 ifeq ($(TARGET_BUILD_TYPE),debug)
   name := $(name)_debug
 endif
+
 name := $(name)-ota-$(FILE_NAME_TAG)
 
 INTERNAL_OTA_PACKAGE_TARGET := $(PRODUCT_OUT)/$(name).zip
@@ -1693,16 +1694,10 @@ bacon: otapackage
 	@echo -e ${CL_CYN}"==============================================="${CL_RST}
 	@echo -e ""
 
-ifeq ($(BLISS_CHANGELOG),true)
-# Generate changelog
-	$(hide) ./vendor/bliss/tools/changelog
-	$(hide) mv $(PRODUCT_OUT)/CHANGELOG-bliss.txt $(PRODUCT_OUT)/$(BLISS_VERSION)-$(TARGET_PRODUCT).txt
-
 ifeq ($(USE_PREBUILT_CHROMIUM),1)
 ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
 	@echo "Running Chromium prebuilt setup script..."
 	$(hide) . $(TOPDIR)vendor/bliss/utils/chromium_prebuilt.sh $(TOP)
-endif
 endif
 endif
 
