@@ -1696,7 +1696,7 @@ bacon: otapackage
 ifeq ($(BLISS_CHANGELOG),true)
 # Generate changelog
 	$(hide) ./vendor/bliss/tools/changelog
-	$(hide) mv $(PRODUCT_OUT)/Changelog.txt $(PRODUCT_OUT)/$(BLISS_VERSION)-$(TARGET_PRODUCT).txt
+	$(hide) mv $(PRODUCT_OUT)/CHANGELOG-bliss.txt $(PRODUCT_OUT)/$(BLISS_VERSION)-$(TARGET_PRODUCT).txt
 
 ifeq ($(USE_PREBUILT_CHROMIUM),1)
 ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
