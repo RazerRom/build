@@ -1,4 +1,4 @@
-# Copyright (C) 2014 The SaberMod Project
+# Copyright (C) 2015 The SaberMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,23 +13,29 @@
 # limitations under the License.
 #
 
-ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += $(GRAPHITE_FLAGS)
+LOCAL_DISABLE_KRAIT := \
+    libc_dns \
+    libc_tzcode \
+    bluetooth.default \
+    libwebviewchromium \
+    libwebviewchromium_loader \
+    libwebviewchromium_plat_support
+
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_KRAIT), $(LOCAL_MODULE))))
+ifndef LOCAL_CONLYFLAGS
+LOCAL_CONLYFLAGS += -mcpu=cortex-a15 \
+    -mtune=cortex-a15
 else
-LOCAL_CONLYFLAGS := $(GRAPHITE_FLAGS)
+LOCAL_CONLYFLAGS := -mcpu=cortex-a15 \
+    -mtune=cortex-a15
 endif
 
 ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += $(GRAPHITE_FLAGS)
+LOCAL_CPPFLAGS += -mcpu=cortex-a15 \
+    -mtune=cortex-a15
 else
-LOCAL_CPPFLAGS := $(GRAPHITE_FLAGS)
-endif
-
-ifndef LOCAL_LDFLAGS
-LOCAL_LDFLAGS  := $(GRAPHITE_FLAGS)
-else
-LOCAL_LDFLAGS  += $(GRAPHITE_FLAGS)
+LOCAL_CPPFLAGS := -mcpu=cortex-a15 \
+    -mtune=cortex-a15
 endif
 endif
 #####

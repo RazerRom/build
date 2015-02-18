@@ -97,8 +97,43 @@ else
   endif
 endif
 
-ifeq ($(BLISSIFY),true)
+# Copyright (C) 2014 The SaberMod Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+# Include custom gcc flags.  Seperate them so they can be easily managed.
+ifeq ($(BLISS_STRICT),true)
+include $(BUILD_SYSTEM)/strict.mk
+endif
+
+ifeq ($(BLISS_KRAIT),true)
+ifndef LOCAL_IS_HOST_MODULE
+include $(BUILD_SYSTEM)/krait.mk
+endif
+endif
+
+# Supported OS's and ARCH's only
+ifeq (linux,$(HOST_OS))
+ifeq (1,$(words $(filter arm arm64,$(TARGET_ARCH))))
+# Do not use graphite on host modules or the clang compiler
+ifndef LOCAL_IS_HOST_MODULE
+ifndef LOCAL_CLANG
+ifeq ($(BLISS_GRAPHITE),true)
 include $(BUILD_SYSTEM)/graphite.mk
+endif
+endif
+endif
+endif
 endif
 
 # The following LOCAL_ variables will be modified in this file.
