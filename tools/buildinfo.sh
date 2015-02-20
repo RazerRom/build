@@ -59,4 +59,10 @@ echo "ro.build.characteristics=$TARGET_AAPT_CHARACTERISTICS"
 #Bliss Properties
 echo "ro.bliss.device=$BLISS_DEVICE"
 
+# ROM Statistics and ROM Identification
+ro.romstats.url=http://team.blissroms.com/RomStats/website/submit
+ro.romstats.name=BlissPop
+ro.romstats.version=2.0
+ro.romstats.tframe=7
+
 echo "# end build properties"
