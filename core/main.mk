@@ -178,7 +178,7 @@ endif
 requires_openjdk := false
 ifeq ($(LEGACY_USE_JAVA6),)
 ifeq ($(HOST_OS), linux)
-requires_openjdk := false
+requires_openjdk := true
 endif
 endif
 
