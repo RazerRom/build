@@ -105,7 +105,8 @@ def iterate_manifests(check_all):
     files = []
     if check_all:
         for file in os.listdir(local_manifest_dir):
-            files.append(os.path.join(local_manifest_dir, file))
+            if file.endswith('.xml'):
+                files.append(os.path.join(local_manifest_dir, file))
     files.append('.repo/manifest.xml')
     for file in files:
         try:
@@ -219,7 +220,7 @@ def parse_device_from_folder(device):
     elif len(search) == 1:
         location = search[0]
     else:
-        print("you device can't be found in device sources..")
+        print("your device can't be found in device sources..")
         location = parse_device_from_manifest(device)
     return location
 

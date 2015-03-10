@@ -71,33 +71,52 @@ $(info   BLISS_VERSION=$(BLISS_VERSION))
 $(info   TARGET_PRODUCT=$(TARGET_PRODUCT))
 $(info   TARGET_BUILD_VARIANT=$(TARGET_BUILD_VARIANT))
 $(info   TARGET_BUILD_TYPE=$(TARGET_BUILD_TYPE))
+$(info   TARGET_BUILD_APPS=$(TARGET_BUILD_APPS))
 $(info   TARGET_ARCH=$(TARGET_ARCH))
 $(info   TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
 $(info   TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
+#tobitege: TARGET_GCC_VERSION instead of unused TARGET_TC_ROM:
+ifdef TARGET_GCC_VERSION
 $(info   TARGET_GCC_VERSION=$(TARGET_GCC_VERSION))
-$(info   TARGET_NDK_GCC_VERSION=$(TARGET_NDK_GCC_VERSION))
-ifdef TARGET_TC_ROM
-$(info   TARGET_TC_ROM=$(TARGET_TC_ROM))
 else
-$(info   TARGET_TC_ROM=4.8)
+$(info   TARGET_GCC_VERSION=4.8)
 endif
+$(info   TARGET_NDK_GCC_VERSION=$(TARGET_NDK_GCC_VERSION))
+$(info   TARGET_TOOLS_PREFIX=$(TARGET_TOOLS_PREFIX))
+$(info   TARGET_TOOLCHAIN_ROOT=$(TARGET_TOOLCHAIN_ROOT))
+$(info   TARGET_CC=$($(combo_2nd_arch_prefix)TARGET_CC))
 ifdef TARGET_TC_KERNEL
 $(info   TARGET_TC_KERNEL=$(TARGET_TC_KERNEL))
 else
-$(info   TARGET_TC_KERNEL=4.8)
+$(info   TARGET_TC_KERNEL DEFAULTING TO "4.8-sm"!)
+endif
+ifdef GCC_OPTIMIZATION_LEVELS
+$(info   GCC_OPTIMIZATION_LEVELS=$(GCC_OPTIMIZATION_LEVELS))
+else
+$(info   GCC_OPTIMIZATION_LEVELS empty!)
+endif
+$(info   BUILD_ID=$(BUILD_ID))
+$(info   HOST_ARCH=$(HOST_ARCH))
+$(info   HOST_OS=$(HOST_OS))
+$(info   HOST_OS_EXTRA=$(HOST_OS_EXTRA))
+$(info   HOST_BUILD_TYPE=$(HOST_BUILD_TYPE))
+$(info   HOST_CC=$(HOST_CC))
+$(info   HOST_OUT_EXECUTABLES=$(HOST_OUT_EXECUTABLES))
+$(info   OUT_DIR=$(OUT_DIR))
+
+ifdef BLISSIFY
+$(info   BLISSIFY=$(BLISSIFY))
+else
+$(info   BLISSIFY=false)
 endif
 ifdef BLISS_O3
 $(info   BLISS_O3=$(BLISS_O3))
 else
 $(info   BLISS_O3=false)
 endif
-ifdef BLISSIFY
-$(info   BLISSIFY=$(BLISSIFY))
-else
-$(info   BLISSIFY=false)
-endif
-ifdef BLISS_GRAPHITE
+ifeq (true,$(BLISS_GRAPHITE))
 $(info   BLISS_GRAPHITE=$(BLISS_GRAPHITE))
+$(info   GRAPHITE_FLAGS=$(GRAPHITE_FLAGS))
 else
 $(info   BLISS_GRAPHITE=false)
 endif
@@ -111,11 +130,15 @@ $(info   BLISS_KRAIT=$(BLISS_KRAIT))
 else
 $(info   BLISS_KRAIT=false)
 endif
-$(info   HOST_ARCH=$(HOST_ARCH))
-$(info   HOST_OS=$(HOST_OS))
-$(info   HOST_OS_EXTRA=$(HOST_OS_EXTRA))
-$(info   HOST_BUILD_TYPE=$(HOST_BUILD_TYPE))
-$(info   BUILD_ID=$(BUILD_ID))
-$(info   OUT_DIR=$(OUT_DIR))
+
+ifneq (,$(GCC_OPTIMIZATION_LEVELS))
+$(info   SM_AND_VERSION=$(SM_AND_VERSION))
+$(info   SM_KERNEL_VERSION=$(SM_KERNEL_VERSION))
+ADDITIONAL_BUILD_PROPERTIES += \
+    ro.sm.android=$(SM_AND_VERSION) \
+    ro.sm.kernel=$(SM_KERNEL_VERSION) \
+    ro.sm.flags=$(GCC_OPTIMIZATION_LEVELS)
+endif
+
 $(info ============================================)
 endif

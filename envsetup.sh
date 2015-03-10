@@ -530,7 +530,7 @@ function brunch()
 {
     breakfast $*
     if [ $? -eq 0 ]; then
-        mka bacon
+        time mka bacon
     else
         echo "No such item in brunch menu. Try 'breakfast'"
         return 1
@@ -562,10 +562,6 @@ function breakfast()
             lunch $target
         else
             # This is probably just the Bliss model name
-            if [ -z "$variant" ]; then
-                variant="userdebug"
-            fi
-            # This is probably just the BLISS model name
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
