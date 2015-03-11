@@ -116,7 +116,7 @@ $(info   BLISS_O3=false)
 endif
 ifeq (true,$(BLISS_GRAPHITE))
 $(info   BLISS_GRAPHITE=$(BLISS_GRAPHITE))
-$(info   GRAPHITE_FLAGS=$(GRAPHITE_FLAGS))
+#$(info   GRAPHITE_FLAGS=$(GRAPHITE_FLAGS))
 else
 $(info   BLISS_GRAPHITE=false)
 endif

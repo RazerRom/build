@@ -56,10 +56,10 @@ $(combo_var_prefix)GLOBAL_CPPFLAGS := -O3 -DNDEBUG -pipe -fivopts -ffunction-sec
 $(combo_var_prefix)GLOBAL_LDFLAGS := -Wl,-O1 -Wl,--as-needed -Wl,--relax -Wl,--sort-common -Wl,--gc-sections
 #tobitege: add graphite flags only in combination with -O3
 ifeq ($(strip $(BLISS_GRAPHITE)),true)
-GRAPHITE_FLAGS := -fgraphite,-floop-flatten,-floop-parallelize-all,-ftree-loop-linear,-floop-interchange,-floop-strip-mine,-floop-block
+GRAPHITE_FLAGS := $(-fgraphite,-floop-flatten,-floop-parallelize-all,-ftree-loop-linear,-floop-interchange,-floop-strip-mine,-floop-block)
 $(combo_var_prefix)GLOBAL_CFLAGS += $(call cc-option,$(GRAPHITE_FLAGS))
 $(combo_var_prefix)RELEASE_CFLAGS += $(call cc-option,$(GRAPHITE_FLAGS))
-$(combo_var_prefix)GLOBAL_CPPFLAGS += $(call cc-option,$(GRAPHITE_FLAGS))
+$(combo_var_prefix)GLOBAL_CPPFLAGS += $(call cpp-option,$(GRAPHITE_FLAGS))
 endif
 else
 $(combo_var_prefix)GLOBAL_CFLAGS := -fno-exceptions -Wno-multichar
