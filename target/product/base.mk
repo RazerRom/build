@@ -111,9 +111,19 @@ PRODUCT_PACKAGES += \
     settings \
     svc \
     tc \
+    tm \
     vdc \
     vold \
     wm
+
+
+PRODUCT_COPY_FILES := $(call add-to-product-copy-files-if-exists,\
+    frameworks/base/preloaded-classes:system/etc/preloaded-classes)
+
+# Note: it is acceptable to not have a compiled-classes file. In that case, all boot classpath
+#       classes will be compiled.
+PRODUCT_COPY_FILES += $(call add-to-product-copy-files-if-exists,\
+    frameworks/base/compiled-classes:system/etc/compiled-classes)
 
 
 $(call inherit-product, $(SRC_TARGET_DIR)/product/embedded.mk)
