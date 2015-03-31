@@ -71,7 +71,7 @@ FORCE:
 
 # These goals don't need to collect and include Android.mks/CleanSpec.mks
 # in the source tree.
-dont_bother_goals := clean clobber dataclean installclean \
+dont_bother_goals := clobber dataclean installclean \
     help out \
     snod systemimage-nodeps \
     stnod systemtarball-nodeps \
@@ -146,10 +146,10 @@ javac_version_str := $(shell unset _JAVA_OPTIONS && javac -version 2>&1)
 # Check for the correct version of java, should be 1.7 by
 # default, and 1.6 if LEGACY_USE_JAVA6 is set.
 ifeq ($(LEGACY_USE_JAVA6),)
-required_version := "1.7.x"
-required_javac_version := "1.7"
-java_version := $(shell echo '$(java_version_str)' | grep '^java .*[ "]1\.7[\. "$$]')
-javac_version := $(shell echo '$(javac_version_str)' | grep '[ "]1\.7[\. "$$]')
+required_version := "1.7.x/1.8.x"
+required_javac_version := "1.7/1.8"
+java_version := $(shell echo '$(java_version_str)' | grep -E '^(java|openjdk) .*[ "]1\.[78][\. "$$]')
+javac_version := $(shell echo '$(javac_version_str)' | grep '[ "]1\.[78][\. "$$]')
 else # if LEGACY_USE_JAVA6
 required_version := "1.6.x"
 required_javac_version := "1.6"
@@ -456,9 +456,6 @@ endif
 
 # These targets are going to delete stuff, don't bother including
 # the whole directory tree if that's all we're going to do
-ifeq ($(MAKECMDGOALS),clean)
-dont_bother := true
-endif
 ifeq ($(MAKECMDGOALS),clobber)
 dont_bother := true
 endif
@@ -1117,6 +1114,7 @@ magic:
 .PHONY: dirty
 dirty:
 	@rm -rf $(OUT_DIR)/target/product/*/system/build.prop
+	@rm -rf $(OUT_DIR)/target/product/*/ota.xml
 	@rm -rf $(OUT_DIR)/target/product/*/*.zip
 	@rm -rf $(OUT_DIR)/target/product/*/*.md5sum
 	@rm -rf $(OUT_DIR)/target/product/*/*.txt

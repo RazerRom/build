@@ -1680,40 +1680,32 @@ endif
 
 ifneq ($(BLISS_BUILD_BLOCK),0)
 ifneq ($(BLISS_BUILD_BLOCK),1)
- BLISS_BUILD_BLOCK := 1
+  BLISS_BUILD_BLOCK := 1
 endif
 endif
 
-ifeq ($(BLISS_BUILD_BLOCK),0)
-$(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
-	@echo "$(OTA_FROM_TARGET_SCRIPT)" > $(PRODUCT_OUT)/ota_script_path
-	@echo "$(override_device)" > $(PRODUCT_OUT)/ota_override_device
-	@echo -e ${CL_YLW}"Package OTA:"${CL_RST}" $@"
-	$(hide) MKBOOTIMG=$(MKBOOTIMG) \
-	   $(OTA_FROM_TARGET_SCRIPT) -v \
-	   -p $(HOST_OUT) \
-	   -k $(KEY_CERT_PAIR) \
-	   --backup=$(backuptool) \
-	   --override_device=$(override_device) $(override_prop) \
-	   $(if $(OEM_OTA_CONFIG), -o $(OEM_OTA_CONFIG)) \
-	   $(BUILT_TARGET_FILES_PACKAGE) $@
-endif
-
+OPT_BUILD_BLOCK :=
 ifeq ($(BLISS_BUILD_BLOCK),1)
+  OPT_BUILD_BLOCK := "--block"
+endif
+
+OPT_WIPE_CACHES :=
+ifeq ($(BLISS_WIPE_CACHES),1)
+  OPT_WIPE_CACHES := "--wipe_caches"
+endif
+
 $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
 	@echo "$(OTA_FROM_TARGET_SCRIPT)" > $(PRODUCT_OUT)/ota_script_path
 	@echo "$(override_device)" > $(PRODUCT_OUT)/ota_override_device
 	@echo -e ${CL_YLW}"Package OTA:"${CL_RST}" $@"
 	$(hide) MKBOOTIMG=$(MKBOOTIMG) \
-	   $(OTA_FROM_TARGET_SCRIPT) -v \
-	   --block \
-	   -p $(HOST_OUT) \
+	   $(OTA_FROM_TARGET_SCRIPT) -v $(OPT_WIPE_CACHES) \
+	   $(OPT_BUILD_BLOCK) -p $(HOST_OUT) \
 	   -k $(KEY_CERT_PAIR) \
 	   --backup=$(backuptool) \
 	   --override_device=$(override_device) $(override_prop) \
 	   $(if $(OEM_OTA_CONFIG), -o $(OEM_OTA_CONFIG)) \
 	   $(BUILT_TARGET_FILES_PACKAGE) $@
-endif	   
 
 BLISS_TARGET_PACKAGE := $(PRODUCT_OUT)/$(BLISS_VERSION).zip
 
@@ -1741,6 +1733,7 @@ bacon: otapackage
 	@echo -e ${CL_CYN}"Size:"${CL_MAG}" `ls -lah $(BLISS_TARGET_PACKAGE) | cut -d ' ' -f 5`"${CL_RST}
 	@echo -e ${CL_CYN}"==============================================="${CL_RST}
 	@echo -e ""
+	$(hide) ./vendor/bliss/tools/otaxml
 
 ifeq ($(USE_PREBUILT_CHROMIUM),1)
 ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
