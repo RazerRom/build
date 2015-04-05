@@ -104,6 +104,17 @@ $(info   HOST_CC=$(HOST_CC))
 $(info   HOST_OUT_EXECUTABLES=$(HOST_OUT_EXECUTABLES))
 $(info   OUT_DIR=$(OUT_DIR))
 
+# BlissRom Flags Start #
+ifdef BLISS_BUILD_BLOCK
+$(info   BLISS_BUILD_BLOCK=$(BLISS_BUILD_BLOCK))
+else
+$(info   BLISS_BUILD_BLOCK=false)
+endif
+ifdef BLISS_WIPE_CACHES
+$(info   BLISS_WIPE_CACHES=$(BLISS_WIPE_CACHES))
+else
+$(info   BLISS_WIPE_CACHES=false)
+endif
 ifdef BLISSIFY
 $(info   BLISSIFY=$(BLISSIFY))
 else
@@ -129,7 +140,9 @@ $(info   BLISS_KRAIT=$(BLISS_KRAIT))
 else
 $(info   BLISS_KRAIT=false)
 endif
+# BlissRom Flags End #
 
+# SaberMod Flags Start #
 ifneq (,$(GCC_OPTIMIZATION_LEVELS))
 $(info   SM_AND_VERSION=$(SM_AND_VERSION))
 $(info   SM_KERNEL_VERSION=$(SM_KERNEL_VERSION))
@@ -138,6 +151,7 @@ ADDITIONAL_BUILD_PROPERTIES += \
     ro.sm.kernel=$(SM_KERNEL_VERSION) \
     ro.sm.flags=$(GCC_OPTIMIZATION_LEVELS)
 endif
+# SaberMod Flags End #
 
 $(info ============================================)
 endif

@@ -561,7 +561,7 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the Bliss model name
+            # This is probably just the BlissRom model name
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
@@ -614,7 +614,7 @@ function lunch()
     check_product $product
     if [ $? -ne 0 ]
     then
-        # if we can't find a product, try to grab it off the BLISS github
+        # if we can't find a product, try to grab it off the BlissRom github
         T=$(gettop)
         pushd $T > /dev/null
         build/tools/roomservice.py $product

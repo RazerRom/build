@@ -1678,19 +1678,19 @@ ifneq ($(TARGET_UNIFIED_DEVICE),)
     endif
 endif
 
-ifneq ($(BLISS_BUILD_BLOCK),0)
-ifneq ($(BLISS_BUILD_BLOCK),1)
-  BLISS_BUILD_BLOCK := 1
+ifneq ($(BLISS_BUILD_BLOCK),false)
+ifneq ($(BLISS_BUILD_BLOCK),true)
+  BLISS_BUILD_BLOCK := true
 endif
 endif
 
 OPT_BUILD_BLOCK :=
-ifeq ($(BLISS_BUILD_BLOCK),1)
+ifeq ($(BLISS_BUILD_BLOCK),true)
   OPT_BUILD_BLOCK := "--block"
 endif
 
 OPT_WIPE_CACHES :=
-ifeq ($(BLISS_WIPE_CACHES),1)
+ifeq ($(BLISS_WIPE_CACHES),true)
   OPT_WIPE_CACHES := "--wipe_caches"
 endif
 
@@ -1714,24 +1714,18 @@ otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
 bacon: otapackage
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(BLISS_TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(BLISS_TARGET_PACKAGE) > $(BLISS_TARGET_PACKAGE).md5sum
-	@echo -e ${CL_CYN}""${CL_CYN}
-	@echo -e ${CL_CYN}"      ___           ___                   ___           ___      "${CL_CYN}
-	@echo -e ${CL_CYN}"     /\  \         /\__\      ___        /\  \         /\  \     "${CL_CYN}
-	@echo -e ${CL_CYN}"    /::\  \       /:/  /     /\  \      /::\  \       /::\  \    "${CL_CYN}
-	@echo -e ${CL_CYN}"   /:/\:\  \     /:/  /      \:\  \    /:/\ \  \     /:/\ \  \   "${CL_CYN}
-	@echo -e ${CL_CYN}"  /::\~\:\__\   /:/  /       /::\__\  _\:\~\ \  \   _\:\~\ \  \  "${CL_CYN}
-	@echo -e ${CL_CYN}" /:/\:\ \:\__\ /:/__/     __/:/\/__/ /\ \:\ \ \__\ /\ \:\ \ \__\ "${CL_CYN}
-	@echo -e ${CL_CYN}" \:\~\:\/:/  / \:\  \    /\/:/  /    \:\ \:\ \/__/ \:\ \:\ \/__/ "${CL_CYN}
-	@echo -e ${CL_CYN}"  \:\ \::/  /   \:\  \   \::/__/      \:\ \:\__\    \:\ \:\__\   "${CL_CYN}
-	@echo -e ${CL_CYN}"   \:\/:/  /     \:\  \   \:\__\       \:\/:/  /     \:\/:/  /   "${CL_CYN}
-	@echo -e ${CL_CYN}"    \::/__/       \:\__\   \/__/        \::/  /       \::/  /    "${CL_CYN}
-	@echo -e ${CL_CYN}"     ~~            \/__/                 \/__/         \/__/     "${CL_CYN}
-	@echo -e ${CL_CYN}""${CL_CYN}
-	@echo -e ${CL_CYN}"===========-Bliss Package Complete-==========="${CL_RST}
+	@echo -e ${CL_CYN}"=================================================================="${CL_CYN}
+	@echo -e ${CL_GRN}"|   __________________              ________                     |"${CL_GRN}
+	@echo -e ${CL_YLW}"|   ___  __ )__  /__(_)________________  __ \____________ ___    |"${CL_YLW}
+	@echo -e ${CL_RED}"|   __  __  |_  /__  /__  ___/_  ___/_  /_/ /  __ \_  __ '__ \   |"${CL_RED}
+	@echo -e ${CL_GRN}"|   _  /_/ /_  / _  / _(__  )_(__  )_  _, _// /_/ /  / / / / /   |"${CL_GRN}
+	@echo -e ${CL_YLW}"|   /_____/ /_/  /_/  /____/ /____/ /_/ |_| \____//_/ /_/ /_/    |"${CL_YLW}
+	@echo -e ${CL_RED}"|                                                                |"${CL_RED}
+	@echo -e ${CL_CYN}"====================-BlissRom Package Complete-==================="${CL_RST}
 	@echo -e ${CL_CYN}"Zip: "${CL_MAG} $(BLISS_TARGET_PACKAGE)${CL_RST}
 	@echo -e ${CL_CYN}"MD5: "${CL_MAG}" `cat $(BLISS_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
 	@echo -e ${CL_CYN}"Size:"${CL_MAG}" `ls -lah $(BLISS_TARGET_PACKAGE) | cut -d ' ' -f 5`"${CL_RST}
-	@echo -e ${CL_CYN}"==============================================="${CL_RST}
+	@echo -e ${CL_CYN}"=================================================================="${CL_RST}
 	@echo -e ""
 	$(hide) ./vendor/bliss/tools/otaxml
 

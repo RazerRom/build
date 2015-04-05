@@ -179,7 +179,7 @@ include $(BUILD_SYSTEM)/node_fns.mk
 include $(BUILD_SYSTEM)/product.mk
 include $(BUILD_SYSTEM)/device.mk
 
-# A BLISS build needs only the BLISS product makefiles.
+# A BlissRom build needs only the BlissRom product makefiles.
 ifneq ($(BLISS_BUILD),)
   all_product_configs := $(shell ls device/*/$(BLISS_BUILD)/bliss.mk)
 else
