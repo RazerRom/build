@@ -200,7 +200,6 @@ current_build_config :=
 installclean_files := \
 	$(HOST_OUT)/obj/NOTICE_FILES \
 	$(HOST_OUT)/sdk \
-	$(PRODUCT_OUT)/ota.xml \
 	$(PRODUCT_OUT)/*.img \
 	$(PRODUCT_OUT)/*.ini \
 	$(PRODUCT_OUT)/*.txt \

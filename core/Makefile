@@ -1727,7 +1727,6 @@ bacon: otapackage
 	@echo -e ${CL_CYN}"Size:"${CL_MAG}" `ls -lah $(BLISS_TARGET_PACKAGE) | cut -d ' ' -f 5`"${CL_RST}
 	@echo -e ${CL_CYN}"=================================================================="${CL_RST}
 	@echo -e ""
-	$(hide) ./vendor/bliss/tools/otaxml
 
 ifeq ($(USE_PREBUILT_CHROMIUM),1)
 ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
