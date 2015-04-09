@@ -188,11 +188,11 @@ ifeq ($(requires_openjdk), true)
 # The user asked for java7 openjdk, so check that the host
 # java version is really openjdk
 ifeq ($(shell echo '$(java_version_str)' | grep -i openjdk),)
-$(info ************************************************************)
-$(info You asked for an OpenJDK 7 build but your version is)
-$(info $(java_version_str).)
-$(info ************************************************************)
-$(error stop)
+#$(info ************************************************************)
+#$(info You asked for an OpenJDK 7 build but your version is)
+#$(info $(java_version_str).)
+#$(info ************************************************************)
+#$(error stop)
 endif # java version is not OpenJdk
 else # if requires_openjdk
 ifneq ($(shell echo '$(java_version_str)' | grep -i openjdk),)
