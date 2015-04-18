@@ -715,11 +715,10 @@ def WriteFullOTAPackage(input_zip, output_zip):
     script.ShowProgress(0.02, 10)
     script.RunBackup("restore")
 
-  if block_based:
-    script.Print("{*} Flashing SuperSU Zip")
-    common.ZipWriteStr(output_zip, "supersu/supersu.zip",
-                   ""+input_zip.read("SYSTEM/addon.d/UPDATE-SuperSU.zip"))
-    script.FlashSuperSU()
+  script.Print("{*} Flashing SuperSU Zip")
+  common.ZipWriteStr(output_zip, "supersu/supersu.zip",
+                 ""+input_zip.read("SYSTEM/addon.d/UPDATE-SuperSU.zip"))
+  script.FlashSuperSU()
 
   if block_based:
     script.AppendExtra("if is_mounted(\"/system\") then")
