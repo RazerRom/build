@@ -60,7 +60,7 @@ fontfullname :=
 endef
 
 # These extra fonts are used as a replacement for OpenType fonts.
-$(eval $(call sdk-extra-font-rule,NanumGothic.ttf,external/naver-fonts/NanumGothic.ttf))
-$(eval $(call sdk-extra-font-rule,DroidSansFallback.ttf,frameworks/base/data/fonts/DroidSansFallbackFull.ttf))
+#$(eval $(call sdk-extra-font-rule,NanumGothic.ttf,external/naver-fonts/NanumGothic.ttf))
+#$(eval $(call sdk-extra-font-rule,DroidSansFallback.ttf,frameworks/base/data/fonts/DroidSansFallbackFull.ttf))
 
 sdk-extra-font-rule :=
