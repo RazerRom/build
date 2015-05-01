@@ -74,6 +74,22 @@ CLANG_CONFIG_UNKNOWN_CFLAGS := \
   -funswitch-loops \
   -fno-tree-sra \
   -finline-limit=64 \
+  -finline-functions \
+  -fno-canonical-system-headers \
+  -Wno-clobbered \
+  -fno-devirtualize \
+  -fno-tree-sra \
+  -fprefetch-loop-arrays \
+  -funswitch-loops \
+  -Wmaybe-uninitialized \
+  -Wno-error=clobbered \
+  -Wno-error=maybe-uninitialized \
+  -Wno-error=unused-but-set-parameter \
+  -Wno-error=unused-but-set-variable \
+  -Wno-free-nonheap-object \
+  -Wno-literal-suffix \
+  -Wno-maybe-uninitialized \
+  -Wno-old-style-declaration \
   -Wno-psabi \
   -Wno-unused-but-set-variable \
   -Wno-unused-but-set-parameter \
