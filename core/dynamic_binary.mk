@@ -60,6 +60,35 @@ $(compress_output): $(compress_input) $(TARGET_SYMBOL_FILTER_FILE) | $(ACP)
 else
 # Skip this step.
 compress_output := $(compress_input)
+## Pack relocation tables
+###########################################################
+relocation_packer_input := $(linked_module)
+relocation_packer_output := $(intermediates)/PACKED/$(my_built_module_stem)
+
+my_pack_module_relocations := $(LOCAL_PACK_MODULE_RELOCATIONS)
+
+ifeq ($(my_pack_module_relocations),)
+  my_pack_module_relocations := $($(LOCAL_2ND_ARCH_VAR_PREFIX)TARGET_PACK_MODULE_RELOCATIONS)
+endif
+
+# Do not pack relocations for static executables.
+ifeq ($(LOCAL_FORCE_STATIC_EXECUTABLE),true)
+  my_pack_module_relocations := false
+endif
+
+# TODO (dimitry): Relocation packer is not yet available for darwin
+ifneq ($(HOST_OS),linux)
+  my_pack_module_relocations := false
+endif
+
+ifeq (true,$(my_pack_module_relocations))
+# Pack relocations
+$(relocation_packer_output): $(relocation_packer_input) | $(ACP)
+	$(pack-elf-relocations)
+else
+$(relocation_packer_output): $(relocation_packer_input) | $(ACP)
+	@echo "target Unpacked: $(PRIVATE_MODULE) ($@)"
+	$(copy-file-to-target)
 endif
 
 ###########################################################
@@ -70,7 +99,7 @@ my_unstripped_path := $(TARGET_OUT_UNSTRIPPED)/$(patsubst $(PRODUCT_OUT)/%,%,$(m
 else
 my_unstripped_path := $(LOCAL_UNSTRIPPED_PATH)
 endif
-symbolic_input := $(compress_output)
+symbolic_input := $(relocation_packer_output)
 symbolic_output := $(my_unstripped_path)/$(my_installed_module_stem)
 $(symbolic_output) : $(symbolic_input) | $(ACP)
 	@echo -e ${CL_GRN}"target Symbolic:"${CL_RST}" $(PRIVATE_MODULE) ($@)"
@@ -126,9 +155,7 @@ $(strip_output): $(strip_input)
 	@echo -e ${CL_GRN}"target Unstripped:"${CL_RST}" $(PRIVATE_MODULE) ($@)"
 	$(copy-file-to-target-with-cp)
 endif
-endif
 endif # my_strip_module
-
 
 $(cleantarget): PRIVATE_CLEAN_FILES += \
     $(linked_module) \
