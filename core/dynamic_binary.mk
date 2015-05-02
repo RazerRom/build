@@ -155,7 +155,6 @@ $(strip_output): $(strip_input)
 	@echo -e ${CL_GRN}"target Unstripped:"${CL_RST}" $(PRIVATE_MODULE) ($@)"
 	$(copy-file-to-target-with-cp)
 endif
-endif
 endif # my_strip_module
 
 $(cleantarget): PRIVATE_CLEAN_FILES += \
