@@ -129,6 +129,11 @@ $(info   BLISS_KRAIT=$(BLISS_KRAIT))
 else
 $(info   BLISS_KRAIT=false)
 endif
+ifdef BLISS_PIPE
+$(info   BLISS_PIPE=$(BLISS_PIPE))
+else
+$(info   BLISS_PIPE=false)
+endif
 
 ifneq (,$(GCC_OPTIMIZATION_LEVELS))
 $(info   SM_AND_VERSION=$(SM_AND_VERSION))
