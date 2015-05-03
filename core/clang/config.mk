@@ -31,32 +31,24 @@ endif
 
 # Clang flags for all host or target rules
 CLANG_CONFIG_EXTRA_ASFLAGS :=
-ifeq ($(USE_O3_OPTIMIZATIONS),true)
-CLANG_CONFIG_EXTRA_CFLAGS := -O3 -Qunused-arguments -Wno-unknown-warning-option
-CLANG_CONFIG_EXTRA_CPPFLAGS := -O3 -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof
-CLANG_CONFIG_EXTRA_LDFLAGS := -Wl,--sort-common
-else
 CLANG_CONFIG_EXTRA_CFLAGS :=
+ifeq ($(BLISS_O3),true)
+CLANG_CONFIG_EXTRA_CPPFLAGS := -O3 -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof
+else
 CLANG_CONFIG_EXTRA_CPPFLAGS :=
-CLANG_CONFIG_EXTRA_LDFLAGS :=
 endif
+CLANG_CONFIG_EXTRA_LDFLAGS :=
 
+ifeq ($(BLISS_O3),true)
 CLANG_CONFIG_EXTRA_CFLAGS += \
-  -D__compiler_offsetof=__builtin_offsetof
-
+  -O3 -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof
+else
+CLANG_CONFIG_EXTRA_CFLAGS += \
+  -Qunused-arguments -Wno-unknown-warning-option -D__compiler_offsetof=__builtin_offsetof
+endif
 # Help catch common 32/64-bit errors.
 CLANG_CONFIG_EXTRA_CFLAGS += \
   -Werror=int-conversion
-
-# Disable overly aggressive warning for macros defined with a leading underscore
-# This happens in AndroidConfig.h, which is included nearly everywhere.
-CLANG_CONFIG_EXTRA_CFLAGS += \
-  -Wno-reserved-id-macro
-
-# Disable overly aggressive warning for format strings.
-# Bug: 20148343
-CLANG_CONFIG_EXTRA_CFLAGS += \
-  -Wno-format-pedantic
 
 # Workaround for ccache with clang.
 # See http://petereisentraut.blogspot.com/2011/05/ccache-and-clang.html.
@@ -90,6 +82,7 @@ CLANG_CONFIG_UNKNOWN_CFLAGS := \
   -Wno-error=maybe-uninitialized \
   -fno-canonical-system-headers \
   -mfpu=neon-vfpv4
+
 
 # Clang flags for all host rules
 CLANG_CONFIG_HOST_EXTRA_ASFLAGS :=

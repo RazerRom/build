@@ -97,8 +97,7 @@ else
   endif
 endif
 
-# Copyright (C) 2014-2015 OptiPop
-# Copyright (C) 2015 BlissRom
+# Copyright (C) 2014 The SaberMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -112,239 +111,34 @@ endif
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-####################
-# O3 FLAGS   #
-####################
-ifeq ($(USE_O3_OPTIMIZATIONS),true)
-ifeq ($(filter $(LOCAL_DISABLE_O3), $(LOCAL_MODULE)),)
-
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	$(O3_FLAGS)
-else
-LOCAL_CONLYFLAGS := \
-	$(O3_FLAGS)
+# Include custom gcc flags.  Seperate them so they can be easily managed.
+ifeq ($(strip $(BLISS_STRICT)),true)
+include $(BUILD_SYSTEM)/strict.mk
 endif
 
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	$(O3_FLAGS)
-else
-LOCAL_CPPFLAGS := \
-	$(O3_FLAGS)
+ifeq ($(strip $(BLISS_KRAIT)),true)
+ifndef LOCAL_IS_HOST_MODULE
+include $(BUILD_SYSTEM)/krait.mk
+endif
 endif
 
-endif
-endif
-####################
-#  END  03  FLAGS  #
-####################
-
-#####################
-# STRICT_ALIASING   #
-#####################
-ifeq ($(STRICT_ALIASING),true)
-ifneq ($(filter $(LOCAL_DISABLE_STRICT),$(LOCAL_MODULE)),)
-
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	$(DISABLE_STRICT)
-else
-LOCAL_CONLYFLAGS := \
-	$(DISABLE_STRICT)
-endif
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	$(DISABLE_STRICT)
-else
-LOCAL_CPPFLAGS := \
-	$(DISABLE_STRICT)
-endif
-
-else
-
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	$(STRICT_ALIASING_FLAGS)
-else
-LOCAL_CONLYFLAGS := \
-	$(STRICT_ALIASING_FLAGS)
-endif
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	$(STRICT_ALIASING_FLAGS)
-else
-LOCAL_CPPFLAGS := \
-	$(STRICT_ALIASING_FLAGS)
-endif
+# Supported OS's and ARCH's only
+ifeq ($(strip $(BLISS_GRAPHITE)),true)
+ifeq (linux,$(HOST_OS))
+ifeq (1,$(words $(filter arm arm64,$(TARGET_ARCH))))
+# Do not use graphite on host modules or the clang compiler
+ifndef LOCAL_IS_HOST_MODULE
 ifndef LOCAL_CLANG
-LOCAL_CONLYFLAGS += \
-	$(STRICT_GCC_LEVEL)
-LOCAL_CPPFLAGS += \
-	$(STRICT_GCC_LEVEL)
-else
-LOCAL_CONLYFLAGS += \
-	$(STRICT_CLANG_LEVEL)
-LOCAL_CPPFLAGS += \
-	$(STRICT_CLANG_LEVEL)
-endif
-
-endif
-endif
-#########################
-#  END STRICT_ALIASING  #
-#########################
-
-########################
-#     ENABLE_GCCONLY   #
-########################
-ifeq ($(ENABLE_GCCONLY),true)
-ifndef LOCAL_IS_HOST_MODULE
-ifeq ($(LOCAL_CLANG),)
-ifeq ($(filter $(LOCAL_DISABLE_GCCONLY), $(LOCAL_MODULE)),)
-
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	$(GCC_ONLY)
-else
-LOCAL_CONLYFLAGS := \
-	$(GCC_ONLY)
-endif
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	$(GCC_ONLY)
-else
-LOCAL_CPPFLAGS := \
-	$(GCC_ONLY)
-endif
-
+include $(BUILD_SYSTEM)/graphite.mk
 endif
 endif
 endif
 endif
-#########################
-#     END GCC ONLY      #
-#########################
-
-##########################
-#  FLOOP_NEST_OPTIMIZE   #
-########################## 
-ifeq ($(FLOOP_NEST_OPTIMIZE),true)
-ifneq ($(filter $(LOCAL_ENABLE_NEST), $(LOCAL_MODULE)),)
-
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	-floop-nest-optimize
-else
-LOCAL_CONLYFLAGS := \
-	-floop-nest-optimize
-endif
-
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	-floop-nest-optimize
-else
-LOCAL_CPPFLAGS := \
-	-floop-nest-optimize
-endif
-
-endif
-endif
-#############################
-#  END FLOOP_NEST_OPTIMIZE  #
-#############################
-
-#############################
-#       GRAPHITE_OPTS       #
-#############################
-ifeq ($(GRAPHITE_OPTS),true)
-ifndef LOCAL_IS_HOST_MODULE
-ifeq ($(LOCAL_CLANG),)
-ifeq ($(filter $(LOCAL_DISABLE_GRAPHITE), $(LOCAL_MODULE)),)
-
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	$(GRAPHITE_FLAGS)
-else
-LOCAL_CONLYFLAGS := \
-	$(GRAPHITE_FLAGS)
-endif
-
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	$(GRAPHITE_FLAGS)
-else
-LOCAL_CPPFLAGS := \
-	$(GRAPHITE_FLAGS)
-endif
-
-endif
-endif
-endif
-endif
-#######################
-#  END GRAPHITE_OPTS  #
-#######################
-
-#################
-# KRAIT_TUNINGS #
-#################
-ifeq ($(KRAIT_TUNINGS),true)
-ifndef LOCAL_IS_HOST_MODULE
-ifeq ($(filter $(LOCAL_DISABLE_KRAIT), $(LOCAL_MODULE)),)
-
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += \
-	$(KRAIT_FLAGS)
-else
-LOCAL_CONLYFLAGS := \
-	$(KRAIT_FLAGS)
-endif
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS += \
-	$(KRAIT_FLAGS)
-else
-LOCAL_CPPFLAGS := \
-	$(KRAIT_FLAGS)
-endif
-
-endif
-endif
-endif
-########################
-#  END KRAIT_TUNINGS   #
-########################
-
-####################
-# FORCE FFAST-MATH #
-####################
-ifeq ($(FFAST_MATH),true)
-ifneq ($(filter $(LOCAL_FORCE_FFAST_MATH), $(LOCAL_MODULE)),)
-
-ifdef LOCAL_CONLYFLAGS
-LOCAL_CONLYFLAGS += $(FFAST_MATH_FLAGS)
-else
-LOCAL_CONLYFLAGS := $(FFAST_MATH_FLAGS)
 endif
 
-ifdef LOCAL_CPPFLAGS
-LOCAL_CPPFLAGS +=  $(FFAST_MATH_FLAGS)
-else
-LOCAL_CPPFLAGS :=  $(FFAST_MATH_FLAGS)
+ifeq ($(strip $(BLISS_PIPE)),true)
+include $(BUILD_SYSTEM)/pipe.mk
 endif
-
-### Some modules doesn't like forcing single precision, until we fix casting errors, let's disable this optimization
-ifeq ($(filter $(LOCAL_DISABLE_SINGLE_PRECISION), $(LOCAL_MODULE)),)
-LOCAL_CONLYFLAGS += -fsingle-precision-constant
-LOCAL_CPPFLAGS   += -fsingle-precision-constant
-endif
-
-endif
-endif
-####################
-#  END  FFAST-MATH #
-####################
 
 # The following LOCAL_ variables will be modified in this file.
 # Because the same LOCAL_ variables may be used to define modules for both 1st arch and 2nd arch,
