@@ -13,9 +13,6 @@
 # limitations under the License.
 
 # Android makefile to build kernel as a part of Android Build
-$(info   -------------------------------------------------------)
-$(info   ---------------- KERNEL.MK START ----------------------)
-$(info   -------------------------------------------------------)
 
 TARGET_AUTO_KDIR := $(shell echo $(TARGET_DEVICE_DIR) | sed -e 's/^device/kernel/g')
 
@@ -159,64 +156,38 @@ KERNEL_HEADERS_INSTALL := $(KERNEL_OUT)/usr
 KERNEL_MODULES_INSTALL := system
 KERNEL_MODULES_OUT := $(TARGET_OUT)/lib/modules
 
-ifeq ($(KERNEL_TOOLCHAIN),)
-KERNEL_TOOLCHAIN := $(ARM_EABI_TOOLCHAIN)
-endif
-
-#tobitege: default empty TARGET_TC_KERNEL:
-ifeq ($(TARGET_TC_KERNEL),)
-  $(info   TARGET_TC_KERNEL DEFAULTED TO "4.9-sm"!)
-  TARGET_TC_KERNEL := 4.9-sm
-endif
-ifneq ($(TARGET_KERNEL_CROSS_COMPILE_PREFIX),)
-  TARGET_KERNEL_XPRE := true
-endif
-
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := $(strip $(TARGET_KERNEL_CROSS_COMPILE_PREFIX))
 ifeq ($(TARGET_KERNEL_CROSS_COMPILE_PREFIX),)
-  ifeq ($(KERNEL_TOOLCHAIN_PREFIX),)
-    KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
-  endif
+ifeq ($(KERNEL_TOOLCHAIN_PREFIX),)
+KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
+endif
 else
-  KERNEL_TOOLCHAIN_PREFIX := $(TARGET_KERNEL_CROSS_COMPILE_PREFIX)
+KERNEL_TOOLCHAIN_PREFIX := $(TARGET_KERNEL_CROSS_COMPILE_PREFIX)
 endif
 
 ifeq ($(KERNEL_TOOLCHAIN),)
-  KERNEL_TOOLCHAIN_PATH := $(KERNEL_TOOLCHAIN_PREFIX)
+KERNEL_TOOLCHAIN_PATH := $(KERNEL_TOOLCHAIN_PREFIX)
 else
-  ifneq ($(KERNEL_TOOLCHAIN_PREFIX),)
-    KERNEL_TOOLCHAIN_PATH := $(KERNEL_TOOLCHAIN)/$(KERNEL_TOOLCHAIN_PREFIX)
-  endif
+ifneq ($(KERNEL_TOOLCHAIN_PREFIX),)
+KERNEL_TOOLCHAIN_PATH := $(KERNEL_TOOLCHAIN)/$(KERNEL_TOOLCHAIN_PREFIX)
+endif
 endif
 
 ifneq ($(USE_CCACHE),)
-  ccache := $(ANDROID_BUILD_TOP)/prebuilts/misc/$(HOST_PREBUILT_TAG)/ccache/ccache
-  # Check that the executable is here.
-  ccache := $(strip $(wildcard $(ccache)))
+    ccache := $(ANDROID_BUILD_TOP)/prebuilts/misc/$(HOST_PREBUILT_TAG)/ccache/ccache
+    # Check that the executable is here.
+    ccache := $(strip $(wildcard $(ccache)))
 endif
 
-ifneq ($(TARGET_KERNEL_XPRE),true)
-  ifneq ($(TARGET_TC_KERNEL),)
-    ifeq ($(HOST_OS),darwin)
-      KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ANDROID_BUILD_TOP)/prebuilts/gcc/darwin-x86/arm/arm-eabi-$(TARGET_TC_KERNEL)/bin/arm-eabi-"
-    else
-      KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-$(TARGET_TC_KERNEL)/bin/arm-eabi-"  
-    endif
+ifneq ($(TARGET_TC_KERNEL),)
+  ifeq ($(HOST_OS),darwin)
+    KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ANDROID_BUILD_TOP)/prebuilts/gcc/darwin-x86/arm/arm-eabi-$(TARGET_TC_KERNEL)/bin/arm-eabi-"
   else
-    $(error   ----------------- KERNEL TOOLCHAIN WRONG! -------------------------)
+    KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-$(TARGET_TC_KERNEL)/bin/arm-eabi-"
   endif
 else
   KERNEL_CROSS_COMPILE := CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN_PATH)"
 endif
-
-$(info   -------------------------------------------------------)
-$(info   ----------------- KERNEL INFO -------------------------)
-$(info   -------------------------------------------------------)
-$(info   KERNEL_TOOLCHAIN_PREFIX=$(KERNEL_TOOLCHAIN_PREFIX))
-$(info   KERNEL_TOOLCHAIN=$(KERNEL_TOOLCHAIN))
-$(info   KERNEL_TOOLCHAIN_PATH=$(KERNEL_TOOLCHAIN_PATH))
-$(info   KERNEL_CROSS_COMPILE=$(KERNEL_CROSS_COMPILE))
-$(info   -------------------------------------------------------)
 
 ccache =
 
@@ -236,19 +207,6 @@ define clean-module-folder
         mpath=`dirname $$mdpath`; rm -rf $$mpath;\
     fi
 endef
-
-ifeq ($(TARGET_ARCH),arm)
-    ifneq ($(USE_CCACHE),)
-      ccache := $(ANDROID_BUILD_TOP)/prebuilts/misc/$(HOST_PREBUILT_TAG)/ccache/ccache
-      # Check that the executable is here.
-      ccache := $(strip $(wildcard $(ccache)))
-    endif
-    ARM_CROSS_COMPILE:=CROSS_COMPILE="$(ccache) $(KERNEL_TOOLCHAIN)/$(KERNEL_TOOLCHAIN_PREFIX)"
-    ccache = 
-endif
-
-# Clear this first to prevent accidental poisoning from env
-MAKE_FLAGS :=
 
 ifeq ($(HOST_OS),darwin)
   MAKE_FLAGS += C_INCLUDE_PATH=$(ANDROID_BUILD_TOP)/external/elfutils/0.153/libelf/
@@ -319,6 +277,3 @@ $(file) : $(KERNEL_BIN) | $(ACP)
 
 ALL_PREBUILT += $(INSTALLED_KERNEL_TARGET)
 endif
-$(info   -------------------------------------------------------)
-$(info   ---------------- KERNEL.MK END ------------------------)
-$(info   -------------------------------------------------------)

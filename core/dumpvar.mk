@@ -75,17 +75,16 @@ $(info   TARGET_BUILD_APPS=$(TARGET_BUILD_APPS))
 $(info   TARGET_ARCH=$(TARGET_ARCH))
 $(info   TARGET_ARCH_VARIANT=$(TARGET_ARCH_VARIANT))
 $(info   TARGET_CPU_VARIANT=$(TARGET_CPU_VARIANT))
-#tobitege: TARGET_GCC_VERSION instead of unused TARGET_TC_ROM:
 ifdef TARGET_GCC_VERSION
 $(info   TARGET_GCC_VERSION=$(TARGET_GCC_VERSION))
 else
 $(info   TARGET_GCC_VERSION=4.8)
 endif
 $(info   TARGET_NDK_GCC_VERSION=$(TARGET_NDK_GCC_VERSION))
-ifdef TARGET_TC_KERNEL
-$(info   TARGET_TC_KERNEL=$(TARGET_TC_KERNEL))
+ifdef TARGET_GCC_VERSION_ARM
+$(info   TARGET_KERNEL_TOOLCHAIN=$(TARGET_GCC_VERSION_ARM))
 else
-$(info   TARGET_TC_KERNEL DEFAULTING TO "4.8-sm"!)
+$(info   TARGET_KERNEL_TOOLCHAIN=4.8)
 endif
 $(info   TARGET_TOOLS_PREFIX=$(TARGET_TOOLS_PREFIX))
 $(info   TARGET_TOOLCHAIN_ROOT=$(TARGET_TOOLCHAIN_ROOT))
@@ -104,7 +103,10 @@ $(info   HOST_CC=$(HOST_CC))
 $(info   HOST_OUT_EXECUTABLES=$(HOST_OUT_EXECUTABLES))
 $(info   OUT_DIR=$(OUT_DIR))
 
-# BlissRom Flags Start #
+#
+# BlissRom Flags Start
+#
+
 ifdef BLISS_BUILD_BLOCK
 $(info   BLISS_BUILD_BLOCK=$(BLISS_BUILD_BLOCK))
 else
@@ -115,43 +117,44 @@ $(info   BLISS_WIPE_CACHES=$(BLISS_WIPE_CACHES))
 else
 $(info   BLISS_WIPE_CACHES=false)
 endif
-ifdef BLISSIFY
-$(info   BLISSIFY=$(BLISSIFY))
+ifdef USE_O3_OPTIMIZATIONS
+$(info   USE_O3_OPTIMIZATIONS=$(USE_O3_OPTIMIZATIONS))
 else
-$(info   BLISSIFY=false)
+$(info   USE_O3_OPTIMIZATIONS=false)
 endif
-ifdef BLISS_O3
-$(info   BLISS_O3=$(BLISS_O3))
+ifdef STRICT_ALIASING
+$(info   STRICT_ALIASING=$(STRICT_ALIASING))
 else
-$(info   BLISS_O3=false)
+$(info   STRICT_ALIASING=false)
 endif
-ifeq (true,$(BLISS_GRAPHITE))
-$(info   BLISS_GRAPHITE=$(BLISS_GRAPHITE))
+ifdef ENABLE_GCCONLY
+$(info   ENABLE_GCCONLY=$(ENABLE_GCCONLY))
 else
-$(info   BLISS_GRAPHITE=false)
+$(info   ENABLE_GCCONLY=false)
 endif
-ifdef BLISS_STRICT
-$(info   BLISS_STRICT=$(BLISS_STRICT))
+ifdef FLOOP_NEST_OPTIMIZE
+$(info   FLOOP_NEST_OPTIMIZE=$(FLOOP_NEST_OPTIMIZE))
 else
-$(info   BLISS_STRICT=false)
+$(info   FLOOP_NEST_OPTIMIZE=false)
 endif
-ifdef BLISS_KRAIT
-$(info   BLISS_KRAIT=$(BLISS_KRAIT))
+ifdef GRAPHITE_OPTS
+$(info   GRAPHITE_OPTS=$(GRAPHITE_OPTS))
 else
-$(info   BLISS_KRAIT=false)
+$(info   GRAPHITE_OPTS=false)
 endif
-# BlissRom Flags End #
-
-# SaberMod Flags Start #
-ifneq (,$(GCC_OPTIMIZATION_LEVELS))
-$(info   SM_AND_VERSION=$(SM_AND_VERSION))
-$(info   SM_KERNEL_VERSION=$(SM_KERNEL_VERSION))
-ADDITIONAL_BUILD_PROPERTIES += \
-    ro.sm.android=$(SM_AND_VERSION) \
-    ro.sm.kernel=$(SM_KERNEL_VERSION) \
-    ro.sm.flags=$(GCC_OPTIMIZATION_LEVELS)
+ifdef KRAIT_TUNINGS
+$(info   KRAIT_TUNINGS=$(KRAIT_TUNINGS))
+else
+$(info   KRAIT_TUNINGS=false)
 endif
-# SaberMod Flags End #
+ifdef FFAST_MATH
+$(info   FFAST_MATH=$(FFAST_MATH))
+else
+$(info   FFAST_MATH=false)
+endif
+#
+# BlissRom Flags End
+#
 
 $(info ============================================)
 endif

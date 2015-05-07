@@ -23,10 +23,10 @@ TARGET_ARCH_VARIANT := x86_64
 endif
 
 # Decouple NDK library selection with platform compiler version
-TARGET_NDK_GCC_VERSION := 4.8
+TARGET_NDK_GCC_VERSION := 4.8-linaro
 
 ifeq ($(strip $(TARGET_GCC_VERSION_EXP)),)
-TARGET_GCC_VERSION := 4.9
+TARGET_GCC_VERSION := 4.8-linaro
 else
 TARGET_GCC_VERSION := $(TARGET_GCC_VERSION_EXP)
 endif
@@ -49,13 +49,13 @@ TARGET_TOOLCHAIN_ROOT := prebuilts/gcc/$(HOST_PREBUILT_TAG)/x86/x86_64-linux-and
 TARGET_TOOLS_PREFIX := $(TARGET_TOOLCHAIN_ROOT)/bin/x86_64-linux-android-
 endif
 
-TARGET_CC := $(TARGET_TOOLS_PREFIX)gcc
-TARGET_CXX := $(TARGET_TOOLS_PREFIX)g++
-TARGET_AR := $(TARGET_TOOLS_PREFIX)ar
-TARGET_OBJCOPY := $(TARGET_TOOLS_PREFIX)objcopy
-TARGET_LD := $(TARGET_TOOLS_PREFIX)ld
-TARGET_READELF := $(TARGET_TOOLS_PREFIX)readelf
-TARGET_STRIP := $(TARGET_TOOLS_PREFIX)strip
+TARGET_CC := $(TARGET_TOOLS_PREFIX)gcc$(HOST_EXECUTABLE_SUFFIX)
+TARGET_CXX := $(TARGET_TOOLS_PREFIX)g++$(HOST_EXECUTABLE_SUFFIX)
+TARGET_AR := $(TARGET_TOOLS_PREFIX)ar$(HOST_EXECUTABLE_SUFFIX)
+TARGET_OBJCOPY := $(TARGET_TOOLS_PREFIX)objcopy$(HOST_EXECUTABLE_SUFFIX)
+TARGET_LD := $(TARGET_TOOLS_PREFIX)ld$(HOST_EXECUTABLE_SUFFIX)
+TARGET_READELF := $(TARGET_TOOLS_PREFIX)readelf$(HOST_EXECUTABLE_SUFFIX)
+TARGET_STRIP := $(TARGET_TOOLS_PREFIX)strip$(HOST_EXECUTABLE_SUFFIX)
 
 ifneq ($(wildcard $(TARGET_CC)),)
 TARGET_LIBGCC := \
@@ -91,10 +91,6 @@ TARGET_GLOBAL_CFLAGS += \
 			-m64 \
 			-no-canonical-prefixes \
 			-fno-canonical-system-headers
-
-# Work around gcc 4.9 devirtualization bug, https://b.corp.google.com/19872411.
-TARGET_GLOBAL_CFLAGS += \
-			-fno-devirtualize \
 
 # Help catch common 32/64-bit errors.
 TARGET_GLOBAL_CFLAGS += \
@@ -162,7 +158,7 @@ define transform-o-to-shared-lib-inner
 $(hide) $(PRIVATE_CXX) \
 	$(PRIVATE_TARGET_GLOBAL_LDFLAGS) \
 	 -nostdlib -Wl,-soname,$(notdir $@) \
-	 -shared -Bsymbolic \
+	$(if $(filter true,$(PRIVATE_CLANG)),-shared,-Wl,-shared) \
 	$(PRIVATE_TARGET_GLOBAL_LD_DIRS) \
 	$(if $(filter true,$(PRIVATE_NO_CRT)),,$(PRIVATE_TARGET_CRTBEGIN_SO_O)) \
 	$(PRIVATE_ALL_OBJECTS) \
