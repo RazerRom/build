@@ -22,19 +22,11 @@ CLANG_CONFIG_arm_UNKNOWN_CFLAGS := \
   -fno-builtin-sin \
   -fno-strict-volatile-bitfields \
   -fno-align-jumps \
-  -Wa,--noexecstack \
-  -Wno-unused-local-typedefs \
-  -fpredictive-commoning \
-  -ftree-loop-distribute-patterns \
-  -fvect-cost-model \
-  -ftree-partial-pre \
-  -fipa-cp-clone \
-  -mvectorize-with-neon-quad
+  -Wa,--noexecstack
 
 define subst-clang-incompatible-arm-flags
   $(subst -march=armv5te,-march=armv5t,\
   $(subst -march=armv5e,-march=armv5,\
-  $(subst -mfpu=neon-vfpv3,-mfpu=neon,\
-  $(subst -mfpu=neon-vfpv4,-mfpu=neon,\
-  $(1)))))
+  $(subst -mcpu=cortex-a15,-march=armv7-a,\
+  $(1))))
 endef

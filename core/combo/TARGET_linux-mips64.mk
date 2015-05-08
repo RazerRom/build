@@ -57,13 +57,13 @@ TARGET_TOOLCHAIN_ROOT := prebuilts/gcc/$(HOST_PREBUILT_TAG)/mips/mips64el-linux-
 TARGET_TOOLS_PREFIX := $(TARGET_TOOLCHAIN_ROOT)/bin/mips64el-linux-android-
 endif
 
-TARGET_CC := $(TARGET_TOOLS_PREFIX)gcc$(HOST_EXECUTABLE_SUFFIX)
-TARGET_CXX := $(TARGET_TOOLS_PREFIX)g++$(HOST_EXECUTABLE_SUFFIX)
-TARGET_AR := $(TARGET_TOOLS_PREFIX)ar$(HOST_EXECUTABLE_SUFFIX)
-TARGET_OBJCOPY := $(TARGET_TOOLS_PREFIX)objcopy$(HOST_EXECUTABLE_SUFFIX)
-TARGET_LD := $(TARGET_TOOLS_PREFIX)ld$(HOST_EXECUTABLE_SUFFIX)
-TARGET_READELF := $(TARGET_TOOLS_PREFIX)readelf$(HOST_EXECUTABLE_SUFFIX)
-TARGET_STRIP := $(TARGET_TOOLS_PREFIX)strip$(HOST_EXECUTABLE_SUFFIX)
+TARGET_CC := $(TARGET_TOOLS_PREFIX)gcc
+TARGET_CXX := $(TARGET_TOOLS_PREFIX)g++
+TARGET_AR := $(TARGET_TOOLS_PREFIX)ar
+TARGET_OBJCOPY := $(TARGET_TOOLS_PREFIX)objcopy
+TARGET_LD := $(TARGET_TOOLS_PREFIX)ld
+TARGET_READELF := $(TARGET_TOOLS_PREFIX)readelf
+TARGET_STRIP := $(TARGET_TOOLS_PREFIX)strip
 
 TARGET_NO_UNDEFINED_LDFLAGS := -Wl,--no-undefined
 
@@ -117,6 +117,7 @@ TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden
 # More flags/options can be added here
 TARGET_RELEASE_CFLAGS := \
 			-DNDEBUG \
+			-g \
 			-Wstrict-aliasing=2 \
 			-fgcse-after-reload \
 			-frerun-cse-after-loop \
@@ -175,7 +176,8 @@ define transform-o-to-shared-lib-inner
 $(hide) $(PRIVATE_CXX) \
 	-nostdlib -Wl,-soname,$(notdir $@) \
 	-Wl,--gc-sections \
-	$(if $(filter true,$(PRIVATE_CLANG)),-shared,-Wl,-shared) \
+	-shared \
+	-Wl,-shared,-Bsymbolic \
 	$(PRIVATE_TARGET_GLOBAL_LD_DIRS) \
 	$(if $(filter true,$(PRIVATE_NO_CRT)),,$(PRIVATE_TARGET_CRTBEGIN_SO_O)) \
 	$(PRIVATE_ALL_OBJECTS) \

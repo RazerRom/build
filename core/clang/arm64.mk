@@ -20,6 +20,5 @@ CLANG_CONFIG_arm64_UNKNOWN_CFLAGS := \
 
 # We don't have any arm64 flags to substitute yet.
 define subst-clang-incompatible-arm64-flags
-  $(subst -mfpu=neon-vfpv4,-mfpu=neon,\
-  $(1))
+  $(1)
 endef
