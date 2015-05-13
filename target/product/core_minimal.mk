@@ -109,4 +109,10 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 PRODUCT_COPY_FILES += \
     system/core/rootdir/init.zygote32.rc:root/init.zygote32.rc
 
+ifneq ($(USE_PREBUILT_CHROMIUM),1)
+PRODUCT_PACKAGES += \
+	libwebviewchromium_plat_support \
+	libwebviewchromium_loader
+endif
+
 $(call inherit-product, $(SRC_TARGET_DIR)/product/base.mk)
