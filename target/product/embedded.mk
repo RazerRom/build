@@ -67,7 +67,9 @@ PRODUCT_PACKAGES += \
     sh \
     surfaceflinger \
     toolbox \
-    libsigchain
+    libsigchain \
+    toybox \
+    tzdatacheck
 
 # SELinux packages
 PRODUCT_PACKAGES += \
