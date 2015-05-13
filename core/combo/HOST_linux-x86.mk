@@ -52,7 +52,7 @@ $(combo_2nd_arch_prefix)HOST_GLOBAL_CFLAGS += -fPIC \
   -include $(call select-android-config-h,linux-x86)
 
 # Disable new longjmp in glibc 2.11 and later. See bug 2967937.
-$(combo_2nd_arch_prefix)HOST_GLOBAL_CFLAGS += -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0
+$(combo_2nd_arch_prefix)HOST_GLOBAL_CFLAGS += -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2 -fstack-protector
 
 # Workaround differences in inttypes.h between host and target.
 # See bug 12708004.
