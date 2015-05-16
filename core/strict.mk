@@ -1,4 +1,4 @@
-# Copyright (C) 2014 The SaberMod Project
+# Copyright (C) 2015 The SaberMod Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,21 +13,17 @@
 # limitations under the License.
 #
 
+ifeq ($(STRICT_ALIASING),true)
+
 LOCAL_DISABLE_STRICT := \
-	camera.omap4 \
-	audio.primary.piranha \
-	camera.msm8084 \
-	camera.vendor.bacon \
-	hwcomposer.msm8084 \
-	bionic \
-	libavutil \
-	libavcodec \
-	libxml2 \
-	stlport \
 	libc_bionic \
 	libc_dns \
+	libc_malloc \
 	libc_tzcode \
 	libziparchive \
+	libtwrpmtp \
+	libfusetwrp \
+	libguitwrp \
 	busybox \
 	libuclibcrpc \
 	libziparchive-host \
@@ -39,12 +35,17 @@ LOCAL_DISABLE_STRICT := \
 	bluetooth.default \
 	logd \
 	mdnsd \
-	dnsmasq \
 	net_net_gyp \
+	libstagefright_webm \
 	libaudioflinger \
+	libmediaplayerservice \
+	libstagefright \
+	ping \
+	ping6 \
 	libdiskconfig \
 	libjavacore \
 	libfdlibm \
+	libvariablespeed \
 	librtp_jni \
 	libwilhelm \
 	libdownmix \
@@ -52,16 +53,14 @@ LOCAL_DISABLE_STRICT := \
 	libqcomvisualizer \
 	libvisualizer \
 	libstlport \
+	libstlport_static \
 	libutils \
 	libandroidfw \
-	libmediaplayerservice \
-	libstagefright \
-	libstagefright_webm \
-	libvariablespeed \
-	ping \
-	ping6 \
+	dnsmasq \
 	static_busybox \
-	mm-vdec-omx-test \
+	libwebviewchromium \
+	libwebviewchromium_loader \
+	libwebviewchromium_plat_support \
 	content_content_renderer_gyp \
 	third_party_WebKit_Source_modules_modules_gyp \
 	third_party_WebKit_Source_platform_blink_platform_gyp \
@@ -72,26 +71,52 @@ LOCAL_DISABLE_STRICT := \
 	libc_openbsd \
 	libc \
 	libc_nomalloc \
-	libstlport_static \
-	libcrypto_static \
-	libfuse \
-	libbusybox \
-	libwnndict \
-        libcurl \
 	gatt_testtool \
+	libfuse \
 	libqsap_sdk \
-	libOmxVenc \
-	lsof \
-	libc_malloc \
-	canohost.c \
-	sshconnect.c \
-	ssh \
+	libcrypto_static \
+	audio.primary.smdk4x12 \
+	libbusybox \
 	libssh \
-	audio.primary.msm8960 \
-        linker
+	ssh \
+	lsof \
+	dex2oat \
+	oatdump \
+	patchoat \
+	libart \
+	libart-compiler \
+	libart-disassembler
 
-ifneq (1,$(words $(filter $(LOCAL_DISABLE_STRICT), $(LOCAL_MODULE))))
-ifndef LOCAL_CONLYFLAGS
+# Force no strict-aliasing on some modules
+LOCAL_FORCE_DISABLE_STRICT := \
+	libziparchive-host \
+	libziparchive \
+	libdiskconfig \
+	logd \
+	libjavacore \
+	libstagefright \
+	libstagefright_webm
+
+ifeq (1,$(words $(filter $(LOCAL_FORCE_DISABLE_STRICT),$(LOCAL_MODULE))))
+ifdef LOCAL_CONLYFLAGS
+LOCAL_CONLYFLAGS += \
+	-fno-strict-aliasing
+else
+LOCAL_CONLYFLAGS := \
+	-fno-strict-aliasing
+endif
+ifdef LOCAL_CPPFLAGS
+LOCAL_CPPFLAGS += \
+	-fno-strict-aliasing
+else
+LOCAL_CPPFLAGS := \
+	-fno-strict-aliasing
+endif
+endif
+
+# Test local module disabled list.
+ifneq (1,$(words $(filter $(LOCAL_DISABLE_STRICT),$(LOCAL_MODULE))))
+ifdef LOCAL_CONLYFLAGS
 LOCAL_CONLYFLAGS += \
 	-fstrict-aliasing \
 	-Werror=strict-aliasing
@@ -122,4 +147,24 @@ LOCAL_CPPFLAGS += \
 	-Wstrict-aliasing=2
 endif
 endif
+else
+
+ifeq (1,$(words $(filter $(LOCAL_FORCE_DISABLE_STRICT),$(LOCAL_MODULE))))
+ifdef LOCAL_CONLYFLAGS
+LOCAL_CONLYFLAGS += \
+	-fno-strict-aliasing
+else
+LOCAL_CONLYFLAGS := \
+	-fno-strict-aliasing
+endif
+ifdef LOCAL_CPPFLAGS
+LOCAL_CPPFLAGS += \
+	-fno-strict-aliasing
+else
+LOCAL_CPPFLAGS := \
+	-fno-strict-aliasing
+endif
+endif
+endif
+
 #####
