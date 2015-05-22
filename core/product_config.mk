@@ -181,7 +181,7 @@ include $(BUILD_SYSTEM)/device.mk
 
 # A BLISS build needs only the BLISS product makefiles.
 ifneq ($(BLISS_BUILD),)
-  all_product_configs := $(shell ls device/*/$(BLISS_BUILD)/bliss.mk)
+  all_product_configs := $(shell find device -path "*/$(BLISS_BUILD)/bliss.mk")
 else
   ifneq ($(strip $(TARGET_BUILD_APPS)),)
   # An unbundled app build needs only the core product makefiles.
