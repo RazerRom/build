@@ -14,8 +14,12 @@ ifneq (,$(filter cortex-a15 krait denver,$(TARGET_$(combo_2nd_arch_prefix)CPU_VA
 	arch_variant_cflags += -D__ARM_FEATURE_LPAE=1
 else
 ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a9)
-	arch_variant_cflags := -mcpu=cortex-a9
+
+ifeq ($(A9_QUAD),true)
+	arch_variant_cflags := -mcpu=cortex-a9 -mfpu=neon -mvectorize-with-neon-quad
 else
+        arch_variant_cflags := -mcpu=cortex-a9 -mfpu=neon
+
 ifneq (,$(filter cortex-a8 scorpion,$(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)))
 	arch_variant_cflags := -mcpu=cortex-a8
 	arch_variant_ldflags := -Wl,--fix-cortex-a8 
@@ -24,6 +28,7 @@ ifeq ($(strip $(TARGET_$(combo_2nd_arch_prefix)CPU_VARIANT)),cortex-a7)
 	arch_variant_cflags := -mcpu=cortex-a7
 else
 	arch_variant_cflags := -march=armv7-a
+endif
 endif
 endif
 endif
