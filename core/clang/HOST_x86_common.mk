@@ -14,7 +14,7 @@ CLANG_CONFIG_x86_LINUX_HOST_EXTRA_CFLAGS := \
 	--gcc-toolchain=$($(clang_2nd_arch_prefix)HOST_TOOLCHAIN_FOR_CLANG) \
 	-no-integrated-as
 
-ifeq ($(strip $(BLISSIFY)),true)
+ifeq ($(strip $(RAZERFY)),true)
 HOST_TOOLCHAIN_CLANG_VERSION :=4.8
 else
 HOST_TOOLCHAIN_CLANG_VERSION :=4.6

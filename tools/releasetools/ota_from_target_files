@@ -598,19 +598,19 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.SetPermissionsRecursive("/tmp/install/bin", 0, 0, 0755, 0755, None, None)
 
   script.Print("")
-  script.Print("******************************************");
-  script.Print("* ____  _ _         ____                 *");
-  script.Print("*| __ )| (_)___ ___|  _ \ ___  _ __ ___  *");
-  script.Print("*|  _ \| | / __/ __| |_) / _ \| '_ ` _ \ *");
-  script.Print("*| |_) | | \__ \__ \  _ < (_) | | | | | |*");
-  script.Print("*|____/|_|_|___/___/_| \_\___/|_| |_| |_|*");
-  script.Print("*                                        *");
-  script.Print("******************************************");
-  script.Print("******************************************");
-  script.Print("**************** BlissRom ****************");
-  script.Print("******************************************");
-  script.Print("************ By: gamerman123x ************");
-  script.Print("******************************************");
+  script.Print("************************************************");
+  script.Print("* ____                    ____                 *");
+  script.Print("*|  _ \ __ _ _______ _ __|  _ \ ___  _ __ ___  *");
+  script.Print("*| |_) / _` |_  / _ \ '__| |_) / _ \| '_ ` _ \ *");
+  script.Print("*|  _ < (_| |/ /  __/ |  |  _ < (_) | | | | | |*");
+  script.Print("*|_| \_\__,_/___\___|_|  |_| \_\___/|_| |_| |_|*");
+  script.Print("*                                              *");
+  script.Print("************************************************");
+  script.Print("************************************************");
+  script.Print("******************* RazerRom *******************");
+  script.Print("************************************************");
+  script.Print("*************** By: gamerman123x ***************");
+  script.Print("************************************************");
   script.Print("")       
 
   builddate = GetBuildProp("ro.build.date", OPTIONS.info_dict)
@@ -757,7 +757,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.ShowProgress(0.05, 5)
   script.WriteRawImage("/boot", "boot.img")
 
-  script.Print("{+} Enjoy BlissRom!")
+  script.Print("{+} Enjoy RazerRom!")
   script.ShowProgress(0.2, 10)
   device_specific.FullOTA_InstallEnd()
 

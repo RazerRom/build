@@ -67,7 +67,7 @@ HOST_OS_EXTRA:=$(shell python -c "import platform; print(platform.platform())")
 $(info ============================================)
 $(info   PLATFORM_VERSION_CODENAME=$(PLATFORM_VERSION_CODENAME))
 $(info   PLATFORM_VERSION=$(PLATFORM_VERSION))
-$(info   BLISS_VERSION=$(BLISS_VERSION))
+$(info   RAZER_VERSION=$(RAZER_VERSION))
 $(info   TARGET_PRODUCT=$(TARGET_PRODUCT))
 $(info   TARGET_BUILD_VARIANT=$(TARGET_BUILD_VARIANT))
 $(info   TARGET_BUILD_TYPE=$(TARGET_BUILD_TYPE))
@@ -104,43 +104,43 @@ $(info   HOST_CC=$(HOST_CC))
 $(info   HOST_OUT_EXECUTABLES=$(HOST_OUT_EXECUTABLES))
 $(info   OUT_DIR=$(OUT_DIR))
 
-# BlissRom Flags Start #
-ifdef BLISS_BUILD_BLOCK
-$(info   BLISS_BUILD_BLOCK=$(BLISS_BUILD_BLOCK))
+# RazerRom Flags Start #
+ifdef RAZER_BUILD_BLOCK
+$(info   RAZER_BUILD_BLOCK=$(RAZER_BUILD_BLOCK))
 else
-$(info   BLISS_BUILD_BLOCK=false)
+$(info   RAZER_BUILD_BLOCK=false)
 endif
-ifdef BLISS_WIPE_CACHES
-$(info   BLISS_WIPE_CACHES=$(BLISS_WIPE_CACHES))
+ifdef RAZER_WIPE_CACHES
+$(info   RAZER_WIPE_CACHES=$(RAZER_WIPE_CACHES))
 else
-$(info   BLISS_WIPE_CACHES=false)
+$(info   RAZER_WIPE_CACHES=false)
 endif
-ifdef BLISSIFY
-$(info   BLISSIFY=$(BLISSIFY))
+ifdef RAZERFY
+$(info   RAZERFY=$(RAZERFY))
 else
-$(info   BLISSIFY=false)
+$(info   RAZERFY=false)
 endif
-ifdef BLISS_O3
-$(info   BLISS_O3=$(BLISS_O3))
+ifdef RAZER_O3
+$(info   RAZER_O3=$(RAZER_O3))
 else
-$(info   BLISS_O3=false)
+$(info   RAZER_O3=false)
 endif
-ifeq (true,$(BLISS_GRAPHITE))
-$(info   BLISS_GRAPHITE=$(BLISS_GRAPHITE))
+ifeq (true,$(RAZER_GRAPHITE))
+$(info   RAZER_GRAPHITE=$(RAZER_GRAPHITE))
 else
-$(info   BLISS_GRAPHITE=false)
+$(info   RAZER_GRAPHITE=false)
 endif
-ifdef BLISS_STRICT
-$(info   BLISS_STRICT=$(BLISS_STRICT))
+ifdef RAZER_STRICT
+$(info   RAZER_STRICT=$(RAZER_STRICT))
 else
-$(info   BLISS_STRICT=false)
+$(info   RAZER_STRICT=false)
 endif
-ifdef BLISS_KRAIT
-$(info   BLISS_KRAIT=$(BLISS_KRAIT))
+ifdef RAZER_KRAIT
+$(info   RAZER_KRAIT=$(RAZER_KRAIT))
 else
-$(info   BLISS_KRAIT=false)
+$(info   RAZER_KRAIT=false)
 endif
-# BlissRom Flags End #
+# RazerRom Flags End #
 
 # SaberMod Flags Start #
 ifneq (,$(GCC_OPTIMIZATION_LEVELS))

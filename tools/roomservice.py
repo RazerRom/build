@@ -45,7 +45,7 @@ default_team_rem = "gh"
 # this shouldn't change unless google makes changes
 local_manifest_dir = ".repo/local_manifests"
 # change this to your name on github (or equivalent hosting)
-android_team = "BlissRom"
+android_team = "RazerRom"
 
 
 def check_repo_exists(git_data):
@@ -225,7 +225,7 @@ def parse_device_from_folder(device):
     return location
 
 def parse_dependency_file(location):
-    dep_file = "bliss.dependencies"
+    dep_file = "razer.dependencies"
     dep_location = '/'.join([location, dep_file])
     if not os.path.isfile(dep_location):
         print("WARNING: %s file not found" % dep_location)

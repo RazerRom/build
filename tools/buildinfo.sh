@@ -57,7 +57,7 @@ if [ "$TARGET_UNIFIED_DEVICE" == "" ] ; then
 fi
 echo "ro.build.characteristics=$TARGET_AAPT_CHARACTERISTICS"
 
-#BlissRom Properties
-echo "ro.bliss.device=$BLISS_DEVICE"
+# RazerRom Properties
+echo "ro.razer.device=$RAZER_DEVICE"
 
 echo "# end build properties"

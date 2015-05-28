@@ -227,7 +227,7 @@ endif
 	$(hide) TARGET_BUILD_TYPE="$(TARGET_BUILD_VARIANT)" \
 			TARGET_BUILD_FLAVOR="$(TARGET_PRODUCT)-$(TARGET_BUILD_VARIANT)" \
 			TARGET_DEVICE="$(TARGET_VENDOR_DEVICE_NAME)" \
-			BLISS_DEVICE="$(TARGET_DEVICE)" \
+			RAZER_DEVICE="$(TARGET_DEVICE)" \
 			PRODUCT_NAME="$(TARGET_VENDOR_PRODUCT_NAME)" \
 			PRODUCT_BRAND="$(PRODUCT_BRAND)" \
 			PRODUCT_DEFAULT_LANGUAGE="$(call default-locale-language,$(PRODUCT_LOCALES))" \
@@ -1023,9 +1023,9 @@ INTERNAL_SYSTEMIMAGE_FILES := $(filter $(TARGET_OUT)/%, \
     $(RECOVERY_RESOURCE_ZIP))
     
 systemimage-squisher: $(INTERNAL_SYSTEMIMAGE_FILES)
-	$(hide) ./vendor/bliss/tools/changelog
+	$(hide) ./vendor/razer/tools/changelog
 	@echo -e "Optimizing PNGs to Shrink ROM Size!"
-	$(hide) APKCERTS=$(APKCERTS_FILE) ./vendor/bliss/tools/squisher
+	$(hide) APKCERTS=$(APKCERTS_FILE) ./vendor/razer/tools/squisher
 
 .PHONY: systemimage-squisher
 
@@ -1664,7 +1664,7 @@ endif
 ifeq ($(WITH_GMS),true)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
 else
-ifneq ($(BLISS_BUILD),)
+ifneq ($(RAZER_BUILD),)
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
 else
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
@@ -1684,19 +1684,19 @@ ifneq ($(TARGET_UNIFIED_DEVICE),)
     endif
 endif
 
-ifneq ($(BLISS_BUILD_BLOCK),false)
-ifneq ($(BLISS_BUILD_BLOCK),true)
-  BLISS_BUILD_BLOCK := true
+ifneq ($(RAZER_BUILD_BLOCK),false)
+ifneq ($(RAZER_BUILD_BLOCK),true)
+  RAZER_BUILD_BLOCK := true
 endif
 endif
 
 OPT_BUILD_BLOCK :=
-ifeq ($(BLISS_BUILD_BLOCK),true)
+ifeq ($(RAZER_BUILD_BLOCK),true)
   OPT_BUILD_BLOCK := "--block"
 endif
 
 OPT_WIPE_CACHES :=
-ifeq ($(BLISS_WIPE_CACHES),true)
+ifeq ($(RAZER_WIPE_CACHES),true)
   OPT_WIPE_CACHES := "--wipe_caches"
 endif
 
@@ -1717,7 +1717,7 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
 	   $(if $(OEM_OTA_CONFIG), -o $(OEM_OTA_CONFIG)) \
 	   $(BUILT_TARGET_FILES_PACKAGE) $@
 
-BLISS_TARGET_PACKAGE := $(PRODUCT_OUT)/$(BLISS_VERSION).zip
+RAZER_TARGET_PACKAGE := $(PRODUCT_OUT)/$(RAZER_VERSION).zip
 
 .PHONY: otapackage bacon bootzip
 otapackage: $(INTERNAL_OTA_PACKAGE_TARGET)
@@ -1729,26 +1729,28 @@ bootzip: bootimage
 	   $(TARGET_DEVICE)
 
 bacon: otapackage
-	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(BLISS_TARGET_PACKAGE)
-	$(hide) $(MD5SUM) $(BLISS_TARGET_PACKAGE) > $(BLISS_TARGET_PACKAGE).md5sum
-	@echo -e ${CL_CYN}"=================================================================="${CL_CYN}
-	@echo -e ${CL_GRN}"|   __________________              ________                     |"${CL_GRN}
-	@echo -e ${CL_YLW}"|   ___  __ )__  /__(_)________________  __ \____________ ___    |"${CL_YLW}
-	@echo -e ${CL_RED}"|   __  __  |_  /__  /__  ___/_  ___/_  /_/ /  __ \_  __ '__ \   |"${CL_RED}
-	@echo -e ${CL_GRN}"|   _  /_/ /_  / _  / _(__  )_(__  )_  _, _// /_/ /  / / / / /   |"${CL_GRN}
-	@echo -e ${CL_YLW}"|   /_____/ /_/  /_/  /____/ /____/ /_/ |_| \____//_/ /_/ /_/    |"${CL_YLW}
-	@echo -e ${CL_RED}"|                                                                |"${CL_RED}
-	@echo -e ${CL_CYN}"====================-BlissRom Package Complete-==================="${CL_RST}
-	@echo -e ${CL_CYN}"Zip: "${CL_MAG} $(BLISS_TARGET_PACKAGE)${CL_RST}
-	@echo -e ${CL_CYN}"MD5: "${CL_MAG}" `cat $(BLISS_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
-	@echo -e ${CL_CYN}"Size:"${CL_MAG}" `ls -lah $(BLISS_TARGET_PACKAGE) | cut -d ' ' -f 5`"${CL_RST}
-	@echo -e ${CL_CYN}"=================================================================="${CL_RST}
+	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(RAZER_TARGET_PACKAGE)
+	$(hide) $(MD5SUM) $(RAZER_TARGET_PACKAGE) > $(RAZER_TARGET_PACKAGE).md5sum
+	@echo -e ${CL_CYN}"======================================================================================================"${CL_CYN}
+	@echo -e ${CL_GRN}"|   '########:::::'###::::'########:'########:'########::::::::::'########:::'#######::'##::::'##:   |"${CL_GRN}
+	@echo -e ${CL_YLW}"|    ##.... ##:::'## ##:::..... ##:: ##.....:: ##.... ##::::::::: ##.... ##:'##.... ##: ###::'###:   |"${CL_YLW}
+	@echo -e ${CL_RED}"|    ##:::: ##::'##:. ##:::::: ##::: ##::::::: ##:::: ##::::::::: ##:::: ##: ##:::: ##: ####'####:   |"${CL_RED}
+	@echo -e ${CL_GRN}"|    ########::'##:::. ##:::: ##:::: ######::: ########:::::::::: ########:: ##:::: ##: ## ### ##:   |"${CL_GRN}
+	@echo -e ${CL_YLW}"|    ##.. ##::: #########::: ##::::: ##...:::: ##.. ##::::::::::: ##.. ##::: ##:::: ##: ##. #: ##:   |"${CL_YLW}
+	@echo -e ${CL_RED}"|    ##::. ##:: ##.... ##:: ##:::::: ##::::::: ##::. ##:::::::::: ##::. ##:: ##:::: ##: ##:.:: ##:   |"${CL_RED}
+	@echo -e ${CL_GRN}"|    ##:::. ##: ##:::: ##: ########: ########: ##:::. ##::::::::: ##:::. ##:. #######:: ##:::: ##:   |"${CL_GRN}
+	@echo -e ${CL_YLW}"|   ..:::::..::..:::::..::........::........::..:::::..::::::::::..:::::..:::.......:::..:::::..::   |"${CL_YLW}
+	@echo -e ${CL_CYN}"======================================-RazerRom Package Complete-====================================="${CL_RST}
+	@echo -e ${CL_CYN}"Zip: "${CL_MAG} $(RAZER_TARGET_PACKAGE)${CL_RST}
+	@echo -e ${CL_CYN}"MD5: "${CL_MAG}" `cat $(RAZER_TARGET_PACKAGE).md5sum | cut -d ' ' -f 1`"${CL_RST}
+	@echo -e ${CL_CYN}"Size:"${CL_MAG}" `ls -lah $(RAZER_TARGET_PACKAGE) | cut -d ' ' -f 5`"${CL_RST}
+	@echo -e ${CL_CYN}"======================================================================================================"${CL_RST}
 	@echo -e ""
 
 ifeq ($(USE_PREBUILT_CHROMIUM),1)
 ifneq ($(PRODUCT_PREBUILT_WEBVIEWCHROMIUM),yes)
 	@echo "Running Chromium prebuilt setup script..."
-	$(hide) . $(TOPDIR)vendor/bliss/utils/chromium_prebuilt.sh $(TOP)
+	$(hide) . $(TOPDIR)vendor/razer/utils/chromium_prebuilt.sh $(TOP)
 endif
 endif
 
