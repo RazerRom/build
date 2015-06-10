@@ -1714,6 +1714,7 @@ $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) $(DISTTOOLS)
 	$(hide) MKBOOTIMG=$(MKBOOTIMG) \
 	   $(OTA_FROM_TARGET_SCRIPT) -v $(OPT_WIPE_CACHES) \
 	   $(OPT_BUILD_BLOCK) -p $(HOST_OUT) \
+	   $(if $(WITH_LZMA_OTA), -z) \
 	   -k $(KEY_CERT_PAIR) \
 	   --backup=$(backuptool) \
 	   --override_device=$(override_device) $(override_prop) \
