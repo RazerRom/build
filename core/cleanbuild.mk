@@ -203,6 +203,7 @@ installclean_files := \
 	$(PRODUCT_OUT)/ota.xml \
 	$(PRODUCT_OUT)/*.img \
 	$(PRODUCT_OUT)/*.ini \
+	$(PRODUCT_OUT)/ota*.xml \
 	$(PRODUCT_OUT)/*.txt \
 	$(PRODUCT_OUT)/*.xlb \
 	$(PRODUCT_OUT)/*.zip \
