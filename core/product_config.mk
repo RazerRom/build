@@ -181,7 +181,7 @@ include $(BUILD_SYSTEM)/device.mk
 
 # A RazerRom build needs only the RazerRom product makefiles.
 ifneq ($(RAZER_BUILD),)
-  all_product_configs := $(shell find device -path "/*/$(RAZER_BUILD)/razer.mk")
+  all_product_configs := $(shell ls device/*/$(RAZER_BUILD)/razer.mk)
 else
   ifneq ($(strip $(TARGET_BUILD_APPS)),)
   # An unbundled app build needs only the core product makefiles.
