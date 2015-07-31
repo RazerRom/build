@@ -179,9 +179,9 @@ include $(BUILD_SYSTEM)/node_fns.mk
 include $(BUILD_SYSTEM)/product.mk
 include $(BUILD_SYSTEM)/device.mk
 
-# A BLISS build needs only the BLISS product makefiles.
-ifneq ($(BLISS_BUILD),)
-  all_product_configs := $(shell find device -path "*/$(BLISS_BUILD)/bliss.mk")
+# A RazerRom build needs only the RazerRom product makefiles.
+ifneq ($(RAZER_BUILD),)
+  all_product_configs := $(shell find device -path "*/$(RAZER_BUILD)/razer.mk")
 else
   ifneq ($(strip $(TARGET_BUILD_APPS)),)
   # An unbundled app build needs only the core product makefiles.
@@ -192,9 +192,9 @@ else
     # files in the tree.
     all_product_configs := $(get-all-product-makefiles)
   endif # TARGET_BUILD_APPS
-endif # BLISS_BUILD
+endif # RAZER_BUILD
 
-ifeq ($(BLISS_BUILD),)
+ifeq ($(RAZER_BUILD),)
 # Find the product config makefile for the current product.
 # all_product_configs consists items like:
 # <product_name>:<path_to_the_product_makefile>

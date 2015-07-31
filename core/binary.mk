@@ -112,18 +112,18 @@ endif
 # limitations under the License.
 #
 # Include custom gcc flags.  Seperate them so they can be easily managed.
-ifeq ($(strip $(BLISS_STRICT)),true)
+ifeq ($(strip $(RAZER_STRICT)),true)
 include $(BUILD_SYSTEM)/strict.mk
 endif
 
-ifeq ($(strip $(BLISS_KRAIT)),true)
+ifeq ($(strip $(RAZER_KRAIT)),true)
 ifndef LOCAL_IS_HOST_MODULE
 include $(BUILD_SYSTEM)/krait.mk
 endif
 endif
 
 # Supported OS's and ARCH's only
-ifeq ($(strip $(BLISS_GRAPHITE)),true)
+ifeq ($(strip $(RAZER_GRAPHITE)),true)
 ifeq (linux,$(HOST_OS))
 ifeq (1,$(words $(filter arm arm64,$(TARGET_ARCH))))
 # Do not use graphite on host modules or the clang compiler
@@ -136,7 +136,7 @@ endif
 endif
 endif
 
-ifeq ($(strip $(BLISS_PIPE)),true)
+ifeq ($(strip $(RAZER_PIPE)),true)
 include $(BUILD_SYSTEM)/pipe.mk
 endif
 

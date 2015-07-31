@@ -71,7 +71,7 @@ $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS :=    -O2 -fomit-frame-pointer -fstric
 # Modules can choose to compile some source as thumb.
 $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS :=  -mthumb -Os -fomit-frame-pointer -fno-strict-aliasing
 
-ifeq ($(strip $(BLISS_O3)),true)
+ifeq ($(strip $(RAZER_O3)),true)
 $(combo_2nd_arch_prefix)TARGET_arm_CFLAGS := -O3 -DNDEBUG -pipe -fomit-frame-pointer -funswitch-loops -fno-tree-vectorize -fno-inline-functions -fivopts -ffunction-sections -fdata-sections -frename-registers -fomit-frame-pointer -ftracer -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-maybe-uninitialized $(call cc-option,$(-fira-loop-pressure,-fforce-addr,-funsafe-loop-optimizations,-funroll-loops,-ftree-loop-distribution,-fsection-anchors,-ftree-loop-im,-ftree-loop-ivcanon,-ffunction-sections,-fgcse-after-reload,-fgcse-las,-fgcse-sm,-fweb,-ffp-contract=fast))
 $(combo_2nd_arch_prefix)TARGET_thumb_CFLAGS :=  -mthumb -Os -DNDEBUG -pipe -fomit-frame-pointer -fno-strict-aliasing -fno-tree-vectorize -fno-inline-functions -fno-unswitch-loops -fivopts -ffunction-sections -fdata-sections -ftracer -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-maybe-uninitialized -Wno-clobbered -Wno-strict-overflow $(call cc-option,$(-funsafe-loop-optimizations,-funroll-loops,-ftree-loop-distribution,-fsection-anchors,-ftree-loop-im,-ftree-loop-ivcanon,-ffunction-sections,-frename-registers,-frerun-cse-after-loop,-fgcse-las,-fgcse-sm,-fweb,-ffp-contract=fast))
 endif
@@ -152,7 +152,7 @@ $(combo_2nd_arch_prefix)TARGET_GLOBAL_LDFLAGS += $(BOARD_GLOBAL_LDFLAGS)
 
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CFLAGS += -mthumb-interwork
 
-ifeq ($(strip $(BLISS_O3)),true)
+ifeq ($(strip $(RAZER_O3)),true)
 $(combo_2nd_arch_prefix)TARGET_GLOBAL_CPPFLAGS += -fvisibility-inlines-hidden -O3 -DNDEBUG -pipe -fivopts -ffunction-sections -fdata-sections -funswitch-loops -fomit-frame-pointer -ftracer -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-maybe-uninitialized $(call cpp-option,$(-fira-loop-pressure,-fforce-addr,-funsafe-loop-optimizations,-funroll-loops,-ftree-loop-distribution,-fsection-anchors,-ftree-loop-im,-ftree-loop-ivcanon,-ffunction-sections,-fgcse-las,-fgcse-sm,-fweb,-ffp-contract=fast))
 $(combo_2nd_arch_prefix)TARGET_RELEASE_CFLAGS := -O3 -DNDEBUG -pipe -g -frerun-cse-after-loop -frename-registers -fno-strict-aliasing -fivopts -ffunction-sections -fdata-sections -funswitch-loops -fomit-frame-pointer -ftracer -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-maybe-uninitialized $(call cc-option,$(-fira-loop-pressure,-fforce-addr,-funsafe-loop-optimizations,-funroll-loops,-ftree-loop-distribution,-fsection-anchors,-ftree-loop-im,-ftree-loop-ivcanon,-ffunction-sections,-fgcse-after-reload,-fgcse-las,-fgcse-sm,-fweb,-ffp-contract=fast))
 else

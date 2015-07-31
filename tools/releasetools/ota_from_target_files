@@ -602,16 +602,27 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.SetPermissionsRecursive("/tmp/install", 0, 0, 0755, 0644, None, None)
   script.SetPermissionsRecursive("/tmp/install/bin", 0, 0, 0755, 0755, None, None)
 
-  script.Print("******************************************");
-  script.Print("*   BlissPop Rom");
-  script.Print("******************************************");
-  script.Print("*   Created By TeamBliss");
-  script.Print("******************************************");    
+  script.Print("************************************************");
+  script.Print("*   ____                                       *");
+  script.Print("*  /\  _`\                                     *");
+  script.Print("*  \ \ \L\ \     __     ____      __   _ __    *");
+  script.Print("*   \ \ ,  /   /'__`\  /\_ ,`\  /'__`\/\`'__\  *");
+  script.Print("*    \ \ \\ \ /\ \L\.\_\/_/  /_/\  __/\ \ \/   *");
+  script.Print("*     \ \_\ \_\ \__/.\_\ /\____\ \____\\ \_\   *");
+  script.Print("*      \/_/\/ /\/__/\/_/ \/____/\/____/ \/_/   *");
+  script.Print("*                                              *");
+  script.Print("************************************************");
+  script.Print("************************************************");
+  script.Print("******************- RazerRom -******************");
+  script.Print("************************************************");
+  script.Print("**************- By: gamerman123x -**************");
+  script.Print("************************************************");
+  script.Print("************************************************");
 
   builddate = GetBuildProp("ro.build.date", OPTIONS.info_dict)
  # releasetype = GetBuildProp("ro.cm.releasetype", OPTIONS.info_dict)
  # script.Print("*   Release: %s"%(releasetype));
-  script.Print("*   Build date: %s"%(builddate));
+  script.Print("*- Build date: %s"%(builddate));
 
 #  if OPTIONS.override_prop:
 #    product = GetBuildProp("ro.build.product", OPTIONS.info_dict)
@@ -619,7 +630,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
 #  else:
   device = GetBuildProp("ro.product.device", OPTIONS.info_dict)
   model = GetBuildProp("ro.product.model", OPTIONS.info_dict)
-  script.Print("*   Device: %s (%s)"%(model, device));
+  script.Print("*- Device: %s (%s)"%(model, device));
   script.Print("******************************************");
 
   if OPTIONS.backuptool:
@@ -752,7 +763,7 @@ def WriteFullOTAPackage(input_zip, output_zip):
   script.ShowProgress(0.05, 5)
   script.WriteRawImage("/boot", "boot.img")
 
-  script.Print("{+} Enjoy BlissPop Rom!")
+  script.Print("{+} Enjoy RazerRom Rom!")
   script.ShowProgress(0.2, 10)
   device_specific.FullOTA_InstallEnd()
 

@@ -67,7 +67,7 @@ HOST_OS_EXTRA:=$(shell python -c "import platform; print(platform.platform())")
 $(info ============================================)
 $(info   PLATFORM_VERSION_CODENAME=$(PLATFORM_VERSION_CODENAME))
 $(info   PLATFORM_VERSION=$(PLATFORM_VERSION))
-$(info   BLISS_VERSION=$(BLISS_VERSION))
+$(info   RAZER_VERSION=$(RAZER_VERSION))
 $(info   TARGET_PRODUCT=$(TARGET_PRODUCT))
 $(info   TARGET_BUILD_VARIANT=$(TARGET_BUILD_VARIANT))
 $(info   TARGET_BUILD_TYPE=$(TARGET_BUILD_TYPE))
@@ -104,37 +104,39 @@ $(info   HOST_CC=$(HOST_CC))
 $(info   HOST_OUT_EXECUTABLES=$(HOST_OUT_EXECUTABLES))
 $(info   OUT_DIR=$(OUT_DIR))
 
-ifdef BLISSIFY
-$(info   BLISSIFY=$(BLISSIFY))
+# RazerRom Build Flags
+ifdef RAZERMOD
+$(info   RAZERMOD=$(RAZERMOD))
 else
-$(info   BLISSIFY=false)
+$(info   RAZERMOD=false)
 endif
-ifdef BLISS_O3
-$(info   BLISS_O3=$(BLISS_O3))
+ifdef RAZER_O3
+$(info   RAZER_O3=$(RAZER_O3))
 else
-$(info   BLISS_O3=false)
+$(info   RAZER_O3=false)
 endif
-ifeq (true,$(BLISS_GRAPHITE))
-$(info   BLISS_GRAPHITE=$(BLISS_GRAPHITE))
+ifeq (true,$(RAZER_GRAPHITE))
+$(info   RAZER_GRAPHITE=$(RAZER_GRAPHITE))
 else
-$(info   BLISS_GRAPHITE=false)
+$(info   RAZER_GRAPHITE=false)
 endif
-ifdef BLISS_STRICT
-$(info   BLISS_STRICT=$(BLISS_STRICT))
+ifdef RAZER_STRICT
+$(info   RAZER_STRICT=$(RAZER_STRICT))
 else
-$(info   BLISS_STRICT=false)
+$(info   RAZER_STRICT=false)
 endif
-ifdef BLISS_KRAIT
-$(info   BLISS_KRAIT=$(BLISS_KRAIT))
+ifdef RAZER_KRAIT
+$(info   RAZER_KRAIT=$(RAZER_KRAIT))
 else
-$(info   BLISS_KRAIT=false)
+$(info   RAZER_KRAIT=false)
 endif
-ifdef BLISS_PIPE
-$(info   BLISS_PIPE=$(BLISS_PIPE))
+ifdef RAZER_PIPE
+$(info   RAZER_PIPE=$(RAZER_PIPE))
 else
-$(info   BLISS_PIPE=false)
+$(info   RAZER_PIPE=false)
 endif
 
+# SaberMod Build Flags
 ifneq (,$(GCC_OPTIMIZATION_LEVELS))
 $(info   SM_AND_VERSION=$(SM_AND_VERSION))
 $(info   SM_KERNEL_VERSION=$(SM_KERNEL_VERSION))
