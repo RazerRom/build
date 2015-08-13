@@ -647,6 +647,8 @@ function lunch()
 
     echo
 
+    export TARGET_DEVICE=$(get_build_var TARGET_DEVICE)
+
     fixup_common_out_dir
 
     set_stuff_for_environment
